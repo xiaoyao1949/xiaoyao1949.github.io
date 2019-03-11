@@ -1,0 +1,1303 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '7.0.1',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="类的保留方法的使用。运算符重写，类的属性控制，上下文管理器，迭代器。">
+<meta name="keywords" content="保留方法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python面向对象（三）">
+<meta property="og:url" content="http://yoursite.com/2018/10/28/[python]23.面向对象（三）：保留方法的应用/index.html">
+<meta property="og:site_name" content="一个代码手艺人的技术博客">
+<meta property="og:description" content="类的保留方法的使用。运算符重写，类的属性控制，上下文管理器，迭代器。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-03-11T13:38:58.342Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="python面向对象（三）">
+<meta name="twitter:description" content="类的保留方法的使用。运算符重写，类的属性控制，上下文管理器，迭代器。">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/10/28/[python]23.面向对象（三）：保留方法的应用/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>python面向对象（三） | 一个代码手艺人的技术博客</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">一个代码手艺人的技术博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">为学日益</h1>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/28/[python]23.面向对象（三）：保留方法的应用/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="萧遥">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一个代码手艺人的技术博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">python面向对象（三）
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-10-28 22:36:40" itemprop="dateCreated datePublished" datetime="2018-10-28T22:36:40+08:00">2018-10-28</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-03-11 21:38:58" itemprop="dateModified" datetime="2019-03-11T21:38:58+08:00">2019-03-11</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/python基础/" itemprop="url" rel="index"><span itemprop="name">python基础</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>类的保留方法的使用。运算符重写，类的属性控制，上下文管理器，迭代器。<br><a id="more"></a></p>
+<blockquote>
+<p> 动态语言的“鸭子类型”：并不要求严格的继承体系，一个对象只要“看起来像鸭子，走起路来像鸭子”，那它就可以被看做是鸭子。</p>
+</blockquote>
+<blockquote>
+<p> Python的“file-like object“就是一种鸭子类型。对真正的文件对象，它有一个<code>read()</code>方法，返回其内容。但是，许多对象，只要有<code>read()</code>方法，都被视为“file-like object“。许多函数接收的参数就是“file-like object“，你不一定要传入真正的文件对象，完全可以传入任何实现了<code>read()</code>方法的对象。</p>
+</blockquote>
+<h2 id="类的运算"><a href="#类的运算" class="headerlink" title="类的运算"></a>类的运算</h2><ul>
+<li><p>运算符的理解</p>
+<p>运算体现一种操作逻辑，广义角度，任何程序都被认为是运算。</p>
+<p>python中运算体现为运算符的重写</p>
+<p>不能重写python语言内置类型的运算符</p>
+<p>不能新建运算符</p>
+<p>is and not or不能被重写</p>
+</li>
+<li><p>各类运算符的重写</p>
+<p>| 一元算数运算相关的保留方法 | 描述     | 使用     |<br>| ————————– | ——– | ——– |<br>| __pos__(self)             | 取正     | +obj     |<br>| __neg__(self)             | 取负     | -obj     |<br>| __abs__(self)             | 取绝对值 | abs(obj) |<br>| __invert__(self)          | 取反     | ~obj     |</p>
+<p>| 二元算数运算相关的保留方法 | 描述             | 使用               |<br>| ————————– | —————- | —————— |<br>| __add__(self, other)      | 加               | obj + other        |<br>| __sub__(self, other)      | 减               | obj - other        |<br>| __mul__(self, other)      | 乘               | obj * other        |<br>| __truediv__(self, other)  | 除               | obj / other        |<br>| __floordiv__(self, other) | 整数除（地板除） | obj // other       |<br>| __mod__(self, other)      | 取模             | obj % other        |<br>| __divmod__(self, other)   | 除模             | divmod(obj, other) |<br>| __pow__(self, other)      | 幂运算           | obj ** other       |<br>| __lshift__(self, other)   | 左移             | obj &lt;&lt; other       |<br>| __rshift__(self, other)   | 右移             | obj &gt;&gt; other       |<br>| __and__(self, other)      | 按位与           | obj &amp; other        |<br>| __xor__(self, other)      | 按位异或         | obj ^ other        |<br>| __or__(self, other)       | 按位或           | obj | other       |</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 算数运算符重写示例</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">NewList</span><span class="params">(list)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__add__</span><span class="params">(self, other)</span>:</span></span><br><span class="line">        result = []</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(len(self)):</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                result.append(self[i] + other[i])</span><br><span class="line">            <span class="keyword">except</span>:</span><br><span class="line">                result.append(self[i])</span><br><span class="line">        <span class="keyword">return</span> result</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">ls = NewList([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>])</span><br><span class="line">lt = NewList([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>])</span><br><span class="line">print(ls + lt)</span><br><span class="line"></span><br><span class="line"><span class="string">'''输出结果</span></span><br><span class="line"><span class="string">[2, 4, 6, 8, 5, 6]</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
+<p>| 比较运算符相关的保留方法 | 描述     | 使用         |<br>| ———————— | ——– | ———— |<br>| __lt__(self, other)     | 小于     | obj &lt; other  |<br>| __le__(self, other)     | 小于等于 | obj &lt;= other |<br>| __eq__(self, other)     | 等于     | obj == other |<br>| __ne__(self, other)     | 不等于   | obj != other |<br>| __gt__(self, other)     | 大于     | obj &gt; other  |<br>| __ge__(self, other)     | 大于等于 | obj &gt;= other |</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 比较运算符重写示例</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">NewList</span><span class="params">(list)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__lt__</span><span class="params">(self, other)</span>:</span></span><br><span class="line">        <span class="string">"以各元素算术和为比较依据"</span></span><br><span class="line">        s, t = <span class="number">0</span>, <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> c <span class="keyword">in</span> self:</span><br><span class="line">            s += c</span><br><span class="line">        <span class="keyword">for</span> c <span class="keyword">in</span> other:</span><br><span class="line">            t += c</span><br><span class="line">        <span class="keyword">return</span> s &lt; t</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">ls = NewList([<span class="number">6</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>])</span><br><span class="line">lt = NewList([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">99</span>])</span><br><span class="line">print([<span class="number">6</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>] &lt; [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">99</span>])</span><br><span class="line">print(ls &lt; lt)</span><br><span class="line"></span><br><span class="line"><span class="string">'''输出结果</span></span><br><span class="line"><span class="string">False</span></span><br><span class="line"><span class="string">True</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
+<p>| 成员运算符相关的保留方法   | 描述                          | 使用           |<br>| ————————– | —————————– | ————– |<br>| __getitem__(self, key)    | 获取对象中序号为整数k的元素   | obj[key]       |<br>| __setitem__(self, key, v) | 为对象中序号为整数k的元素赋值 | obj[key] = v   |<br>| __delitem__(self, key)    | 删除对象中序号为整数k的元素   | del obj[key]   |<br>| __reversed__(self)        | 逆序                          | obj.reversed() |<br>| __contains__(self, item)  | 判断是否in                    | item in obj    |</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 成员运算符重写示例</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">NewList</span><span class="params">(list)</span>:</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__contains__</span><span class="params">(self, item )</span>:</span></span><br><span class="line">		<span class="string">"各元素算术和也作为成员"</span></span><br><span class="line">		s = <span class="number">0</span></span><br><span class="line">		<span class="keyword">for</span> c <span class="keyword">in</span> self:</span><br><span class="line">			s += c</span><br><span class="line">		<span class="keyword">if</span> super().__contains__( item ) <span class="keyword">or</span> item == s:</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">		<span class="keyword">else</span> :</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">ls = NewList([<span class="number">6</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>])</span><br><span class="line">print(<span class="number">6</span> <span class="keyword">in</span> ls, <span class="number">12</span> <span class="keyword">in</span> ls)</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">True</span></span><br><span class="line"><span class="string">True</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
+<p>| 其他运算符相关的保留方法       | 描述                   | 使用                       |<br>| —————————— | ———————- | ————————– |<br>| __str__(self)                 | 定义对象转字符串       | str(obj)                   |<br>| __int__(self)                 | 定义对象转整数         | int(obj)                   |<br>| __float__(self)               | 定义对象转浮点数       | float(obj)                 |<br>| __complex__(self)             | 定义对象转复数         | complex(obj)               |<br>| __byets__(self)               | 定义对象转字节串       | byets(obj)                 |<br>| __bool__(self)                | 定义对象转布尔类型     | bool(obj)                  |<br>| __repr__(self)                | 定义对象的可打印字符串 | repr(obj)                  |<br>| __len__(self)                 | 定义对象长度           | len(obj)                   |<br>| __round__(self, n=None)       | 定义对象四舍五入       | round(obj)                 |<br>| __format__(self, format_spec) | 定义对象格式化输出     | obj.format()   format(obj) |</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">myStr</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, data)</span>:</span></span><br><span class="line">        self.data = data</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__repr__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">','</span>.join(self.data)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">a = myStr(<span class="string">'hello'</span>)</span><br><span class="line">print(repr(a))</span><br><span class="line"></span><br><span class="line"><span class="string">'''输出结果</span></span><br><span class="line"><span class="string">h,e,l,l,o</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="类的属性控制"><a href="#类的属性控制" class="headerlink" title="类的属性控制"></a>类的属性控制</h2><h3 id="设置对象属性"><a href="#设置对象属性" class="headerlink" title="设置对象属性"></a>设置对象属性</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">__setattr__(self,name,value) <span class="comment"># 一般不需要定义，直接用父类继承的</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 错误的写法，会引起循环递归</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">__setattr__</span><span class="params">(self, name, value)</span>:</span></span><br><span class="line">    setattr(self, name,value)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 正确的写法</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">__setattr__</span><span class="params">(self, name, value)</span>:</span></span><br><span class="line">    self.__dict__[name] = value</span><br></pre></td></tr></table></figure>
+<h3 id="获取对象属性"><a href="#获取对象属性" class="headerlink" title="获取对象属性"></a>获取对象属性</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">__getattr__(self, name) <span class="comment">#属性在默认情况下没有被查询到时，访问这个</span></span><br><span class="line">__getattribute__(self, naem) <span class="comment"># 每次访问对象的属性时，一定会调用。更容易引起无限递归</span></span><br></pre></td></tr></table></figure>
+<h3 id="删除对象属性"><a href="#删除对象属性" class="headerlink" title="删除对象属性"></a>删除对象属性</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">__delattr__(self, name) <span class="comment"># 内建del调用这个</span></span><br></pre></td></tr></table></figure>
+<h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Programer</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, name, age)</span>:</span></span><br><span class="line">        self.name = name</span><br><span class="line">        self.age = age</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__getattribute__</span><span class="params">(self, name)</span>:</span></span><br><span class="line">        <span class="comment"># return getattr(self, name) # 错误的写法</span></span><br><span class="line">        <span class="comment"># return self.__dict__[name] # 错误的写法</span></span><br><span class="line">        <span class="keyword">return</span> super(Programer, self).__getattribute__(name)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__setattr__</span><span class="params">(self, name, value)</span>:</span></span><br><span class="line">        <span class="comment"># setattr(self, name, value) #错误的写法</span></span><br><span class="line">        self.__dict__[name] = value</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    p = Programer(<span class="string">'albert'</span>, <span class="number">25</span>)</span><br><span class="line">    print(p.name)</span><br></pre></td></tr></table></figure>
+<h2 id="上下文管理器"><a href="#上下文管理器" class="headerlink" title="上下文管理器"></a>上下文管理器</h2><p>上下文 Context：程序执行中某个状态</p>
+<ul>
+<li>程序执行所需的一些内外部参数，构成了程序运行时状态</li>
+<li>上下文是用来表达程序运行状态的概念，对应内存状态</li>
+<li>上下文是程序中断保留或恢复运行的重要状态信息</li>
+</ul>
+<p>上下文管理器：一个可以在程序中加载独立上下文的对象</p>
+<ul>
+<li>万物皆对象：上下文管理器也是一个对象，管理一个独立上下文区域</li>
+<li>上下文管理器使用with显式创建</li>
+<li>进入和退出分别对应<strong>enter</strong>()和<strong>exit</strong>()方法</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> 表达式 <span class="keyword">as</span> 对象引用:</span><br><span class="line">	语句块</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">__enter__()执行开始，返回结果绑定给对象引用。</span></span><br><span class="line"><span class="string">语句块执行结束，__exit__()执行,退出上下文区域</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 简单例子</span></span><br><span class="line"><span class="comment"># 文件操作打开及管理</span></span><br><span class="line">wiht open(<span class="string">'xxx.txt'</span>, <span class="string">'r'</span>) <span class="keyword">as</span> f:</span><br><span class="line">    <span class="keyword">for</span> line <span class="keyword">in</span> f:</span><br><span class="line">        print(line)</span><br><span class="line"><span class="comment"># with 结束后，文件被自动关闭。</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># with 可以包含多个表达式及as</span></span><br><span class="line"><span class="keyword">with</span> open(<span class="string">'xxx.txt'</span>, <span class="string">'r'</span>) <span class="keyword">as</span> fi, open(<span class="string">'yyy.txt'</span>, <span class="string">'w'</span>) <span class="keyword">as</span> fo:</span><br><span class="line">    <span class="keyword">for</span> line <span class="keyword">in</span> fi:</span><br><span class="line">        fo.write(line)</span><br></pre></td></tr></table></figure>
+<p>只要实现了双下划线<strong>enter</strong>()和<strong>exit</strong>()方法就可以支持上下文管理器</p>
+<p>python支持的对象：</p>
+<ul>
+<li>file</li>
+<li>decimal.Context</li>
+<li>thread.LockType</li>
+<li>threading.Lock</li>
+<li>threading.Rlock</li>
+<li>threading.Condition</li>
+<li>threading.Semaphore</li>
+<li>threading.BoundedSemaphore</li>
+</ul>
+<p>也可以自定义对象</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Demo</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, name)</span>:</span></span><br><span class="line">        self.name = name</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__enter</span><span class="params">(self)</span>:</span></span><br><span class="line">        print(<span class="string">'进入上下文管理器'</span>)</span><br><span class="line">        <span class="keyword">return</span> self</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__exit__</span><span class="params">(self, exc_type, exc_val, exc_tb)</span>:</span></span><br><span class="line">        print(<span class="string">'退出上下文管理器'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(self)</span>:</span></span><br><span class="line">        print(<span class="string">'Demo 的一个实例对象正在运行'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> Demo(<span class="string">'obj'</span>) <span class="keyword">as</span> d:</span><br><span class="line">    <span class="comment"># as引用的式__enter__()返回值</span></span><br><span class="line">    d.run()</span><br></pre></td></tr></table></figure>
+<h2 id="迭代器"><a href="#迭代器" class="headerlink" title="迭代器"></a>迭代器</h2><p>迭代器类型 Iterator Types：实现容器中元素的迭代</p>
+<ul>
+<li>容器：Container：包含一组元素的数据类型，如全部组合数据类型</li>
+<li>迭代器：容器之上的一种迭代，迭代方式以对象形式表达</li>
+<li>迭代器定义了逐一获取容器中元素的方法</li>
+<li>迭代器是一个实现了<strong>iter</strong>()和<strong>next</strong>()方法的对象，常与for…in…配合使用。</li>
+</ul>
+<p>可以配合next(iter)和iter.send()使用<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DemoIterator</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, container)</span>:</span></span><br><span class="line">        self.container = container</span><br><span class="line">        self.salt = len(self.container)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__iter__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__next__</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.salt -= <span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span> self.salt &gt;= <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">return</span> self.container[self.salt]</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">raise</span> StopIteration</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">d = DemoIterator([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>])</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> d:</span><br><span class="line">    print(i)</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">6</span></span><br><span class="line"><span class="string">5</span></span><br><span class="line"><span class="string">4</span></span><br><span class="line"><span class="string">3</span></span><br><span class="line"><span class="string">2</span></span><br><span class="line"><span class="string">1</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure></p>
+<p><code>`</code>python</p>
+<h1 id="判断一个对象是否是可迭代对象"><a href="#判断一个对象是否是可迭代对象" class="headerlink" title="判断一个对象是否是可迭代对象"></a>判断一个对象是否是可迭代对象</h1><p>from collections import Iterable<br>isinstance(‘abc’, Iterable) # str是否可迭代   True<br>isinstance([1,2,3], Iterable) # list是否可迭代  True<br>isinstance(123, Iterable) # 整数是否可迭代  False</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/保留方法/" rel="tag"># 保留方法</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/10/28/[python]22.面向对象（二）：封装继承多态/" rel="next" title="python面向对象（二）">
+                <i class="fa fa-chevron-left"></i> python面向对象（二）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/10/29/[python]24.面向对象（四）：深入理解引用与拷贝/" rel="prev" title="python面向对象（四）">
+                python面向对象（四） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">萧遥</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">74</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">10</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">128</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/xiaoyao1949" title="GitHub &rarr; https://github.com/xiaoyao1949" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:xiaoyao1949@outlook.com" title="E-Mail &rarr; mailto:xiaoyao1949@outlook.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#类的运算"><span class="nav-number">1.</span> <span class="nav-text">类的运算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#类的属性控制"><span class="nav-number">2.</span> <span class="nav-text">类的属性控制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#设置对象属性"><span class="nav-number">2.1.</span> <span class="nav-text">设置对象属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#获取对象属性"><span class="nav-number">2.2.</span> <span class="nav-text">获取对象属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除对象属性"><span class="nav-number">2.3.</span> <span class="nav-text">删除对象属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#例子"><span class="nav-number">2.4.</span> <span class="nav-text">例子</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#上下文管理器"><span class="nav-number">3.</span> <span class="nav-text">上下文管理器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#迭代器"><span class="nav-number">4.</span> <span class="nav-text">迭代器</span></a></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#判断一个对象是否是可迭代对象"><span class="nav-number"></span> <span class="nav-text">判断一个对象是否是可迭代对象</span></a></li></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">萧遥</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.1"></script>
+
+  <script src="/js/src/motion.js?v=7.0.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/schemes/muse.js?v=7.0.1"></script>
+
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.1"></script>
+<script src="/js/src/post-details.js?v=7.0.1"></script>
+
+
+
+  
+
+
+  <script src="/js/src/next-boot.js?v=7.0.1"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+
+  
+<script>
+if ($('body').find('pre.mermaid').length) {
+  $.ajax({
+    type: 'GET',
+    url: '//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js',
+    dataType: 'script',
+    cache: true,
+    success: function() {
+      mermaid.initialize({
+        theme: 'default',
+        logLevel: 3,
+        flowchart: { curve: 'linear' },
+        gantt: { axisFormat: '%m/%d/%Y' },
+        sequence: { actorMargin: 50 }
+      });
+    }
+  });
+}
+</script>
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+<style>
+  .copy-btn {
+    display: inline-block;
+    padding: 6px 12px;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 20px;
+    color: #333;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    
+      background-color: #fff;
+      border: none;
+    
+    user-select: none;
+    outline: 0;
+  }
+
+  .highlight-wrap .copy-btn {
+    transition: opacity .3s ease-in-out;
+    opacity: 0;
+    padding: 2px 6px;
+    position: absolute;
+    
+      right: 0px;
+      height: 42px;
+    
+  }
+
+  .highlight-wrap:hover .copy-btn,
+  .highlight-wrap .copy-btn:focus {
+    opacity: 1;
+  }
+
+  .highlight-wrap {
+    position: relative;
+  }
+</style>
+<script>
+  $('.highlight').each(function(i, e) {
+    var $wrap = $('<div>').addClass('highlight-wrap');
+    $(e).after($wrap);
+    $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function(e) {
+      var code = $(this).parent().find('.code').find('.line').map(function(i, e) {
+        return $(e).text();
+      }).toArray().join('\n');
+      var ta = document.createElement('textarea');
+      var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+      ta.style.top = yPosition + 'px'; // Prevent page scroll
+      ta.style.position = 'absolute';
+      ta.style.opacity = '0';
+      ta.readOnly = true;
+      ta.value = code;
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0, code.length);
+      ta.readOnly = false;
+      var result = document.execCommand('copy');
+      
+        if (result) $(this).text('复制成功');
+        else $(this).text('复制失败');
+      
+      ta.blur(); // For iOS
+      $(this).blur();
+    })).on('mouseleave', function(e) {
+      var $b = $(this).find('.copy-btn');
+      setTimeout(function() {
+        $b.text('复制');
+      }, 300);
+    }).append(e);
+  })
+</script>
+
+
+</body>
+</html>

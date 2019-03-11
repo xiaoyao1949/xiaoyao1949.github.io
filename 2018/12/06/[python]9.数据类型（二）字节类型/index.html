@@ -1,0 +1,1484 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '7.0.1',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="python的字节类型">
+<meta name="keywords" content="字符串,字节串">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python数据类型（二）">
+<meta property="og:url" content="http://yoursite.com/2018/12/06/[python]9.数据类型（二）字节类型/index.html">
+<meta property="og:site_name" content="一个代码手艺人的技术博客">
+<meta property="og:description" content="python的字节类型">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-03-11T13:38:58.577Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="python数据类型（二）">
+<meta name="twitter:description" content="python的字节类型">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/12/06/[python]9.数据类型（二）字节类型/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>python数据类型（二） | 一个代码手艺人的技术博客</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">一个代码手艺人的技术博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">为学日益</h1>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/06/[python]9.数据类型（二）字节类型/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="萧遥">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一个代码手艺人的技术博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">python数据类型（二）
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-12-06 18:35:18" itemprop="dateCreated datePublished" datetime="2018-12-06T18:35:18+08:00">2018-12-06</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-03-11 21:38:58" itemprop="dateModified" datetime="2019-03-11T21:38:58+08:00">2019-03-11</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/python基础/" itemprop="url" rel="index"><span itemprop="name">python基础</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>python的字节类型<br><a id="more"></a></p>
+<h2 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h2><class 'str'>
+
+<ul>
+<li><p>由0个或多个字符组成的<strong>有序字符序列</strong></p>
+</li>
+<li><p>单行字符串由<strong>一对单引号</strong>或<strong>一对双引号</strong>表示，如：”abc” 或 ‘abc’</p>
+</li>
+<li><p>多行字符串由<strong>三个单引号</strong>或<strong>三个双引号</strong>表示，如：’’’ Python<br>语言 ‘’’</p>
+</li>
+<li><p>字符串是字符的<strong>有序</strong>序列，可以<strong>用序号访问</strong></p>
+</li>
+<li><p><strong>索引</strong>：s[N] 通过序号获取单个字符。如：”abc”[1]=”b”   ; “abc”[-1]=”c”</p>
+</li>
+<li><p><strong>切片</strong>：s[N:M:K] 获取M（含，缺省为0）到N（不含，缺省为len）的步径为K（缺省为1，-1时为倒序）的子串。</p>
+</li>
+<li><p>字符串支持<strong>转义字符</strong></p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>功能</th>
+<th>使用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>转义符表达特定字符的本意</td>
+<td>“这里有个双引号(\”)” 结果为 这里有个双引号(“)</td>
+</tr>
+<tr>
+<td>转义符形成一些组合，表达一些不可打印的含义</td>
+<td>“\b”回退 “\n”换行(光标移动到下行首) “\r” 回车(光标移动到本行首)</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><p>字符串前导符r表示raw string,不支持转义，常用于正则表达式。</p>
+</li>
+<li><p>字符串的编码方式<br>统一字符编码，即覆盖几乎所有字符的编码方式<br>从0到1114111 (0x10FFFF)，每个编码对应一个字符<br>Python字符串中每个字符都是Unicode编码字符</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"1 + 1 = 2"</span> + chr(<span class="number">10004</span>)</span><br><span class="line"><span class="string">'1 + 1 = 2✔'</span></span><br><span class="line">ord(<span class="string">'♉'</span>)</span><br><span class="line"><span class="number">9801</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>字符串<strong>操作符</strong></p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>操作符及使用</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>x + y</td>
+<td>连接两个字符串x和y</td>
+</tr>
+<tr>
+<td>n <em> x 或 x </em> n</td>
+<td>复制n次字符串x</td>
+</tr>
+<tr>
+<td>x in s</td>
+<td>如果x是s的子串，返回True，否则返回False</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>字符串操作<strong>函数</strong></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>函数及使用</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>len(x)</td>
+<td>长度，返回字符串x的长度</td>
+</tr>
+<tr>
+<td>str(x)</td>
+<td>任意类型x所对应的字符串形式</td>
+</tr>
+<tr>
+<td>hex(x) 或 oct(x)</td>
+<td>整数x的十六进制或八进制小写形式字符串</td>
+</tr>
+<tr>
+<td>chr(u)</td>
+<td>x为Unicode编码，返回其对应的字符 （源于：character）</td>
+</tr>
+<tr>
+<td>ord(x)</td>
+<td>x为字符，返回其对应的Unicode编码 （源于：ordinal）</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>字符串操作<strong>方法</strong></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>方法及使用</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>str.lower() 或 str.upper()</td>
+<td>返回字符串的副本，全部字符小写/大写<br>“AbCdEfGh”.lower() 结果为 “abcdefgh”</td>
+</tr>
+<tr>
+<td>str.split(sep=None)</td>
+<td>返回一个列表，由str根据sep被分隔的部分组成<br>“A,B,C”.split(“,”) 结果为 [‘A’,’B’,’C’]</td>
+</tr>
+<tr>
+<td>str.count(sub)</td>
+<td>返回子串sub在str中出现的次数<br>“an apple a day”.count(“a”) 结果为 4</td>
+</tr>
+<tr>
+<td>str.replace(old, new)</td>
+<td>返回字符串str副本，所有old子串被替换为new<br>“python”.replace(“n”,”n123.io”) 结果为 “python123.io”</td>
+</tr>
+<tr>
+<td>str.center(width[,fillchar])</td>
+<td>字符串str根据宽度width居中，fillchar可选<br>“python”.center(20,”=”) 结果为 ‘=======python=======’</td>
+</tr>
+<tr>
+<td>str.strip(chars)</td>
+<td>从str中去掉在其左侧和右侧chars中列出的字符<br>“= python= “.strip(“ =np”) 结果为”ytho”</td>
+</tr>
+<tr>
+<td>str.join(iter)</td>
+<td>在iter变量除最后元素外每个元素后增加一个str<br>“,”.join(“12345”) 结果为 “1,2,3,4,5” #主要用于字符串分隔等</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><p>字符串<strong>格式化</strong></p>
+<ul>
+<li><p>%方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; &apos;Hello, %s&apos; % &apos;world&apos;</span><br><span class="line">&apos;Hello, world&apos;</span><br><span class="line">&gt;&gt;&gt; &apos;Hi, %s, you have $%d.&apos; % (&apos;Michael&apos;, 1000000)</span><br><span class="line">&apos;Hi, Michael, you have $1000000.&apos;</span><br></pre></td></tr></table></figure>
+<p>如果只有一个<code>%?</code>，括号可以省略。</p>
+<p>常见的占位符有：</p>
+</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>占位符</th>
+<th>替换内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>%d</td>
+<td>整数</td>
+</tr>
+<tr>
+<td>%f</td>
+<td>浮点数</td>
+</tr>
+<tr>
+<td>%s</td>
+<td>字符串</td>
+</tr>
+<tr>
+<td>%x</td>
+<td>十六进制整数</td>
+</tr>
+</tbody>
+</table>
+<pre><code>其中，格式化整数和浮点数还可以指定是否补0和整数与小数的位数
+用`%%`来表示一个`%`  
+</code></pre><ul>
+<li><p>str.format()（python2.6增加）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#通过位置</span></span><br><span class="line"><span class="string">'你好，我是&#123;0&#125;, 很高兴为您服务。您的资料显示您今年&#123;1&#125;岁'</span>.format(<span class="string">'小娜'</span>,<span class="number">18</span>)</span><br><span class="line"><span class="string">'你好，我是&#123;&#125;, 很高兴为您服务。您的资料显示您今年&#123;&#125;岁'</span>.format(<span class="string">'小娜'</span>,<span class="number">18</span>)</span><br><span class="line"><span class="string">'你好，我是&#123;1&#125;, 很高兴为您服务。您的资料显示您今年&#123;0&#125;岁。&#123;1&#125;与你同岁'</span>.format(<span class="number">18</span>, <span class="string">'小娜'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#通过关键字参数</span></span><br><span class="line"><span class="string">'你好，我是&#123;name&#125;, 很高兴为您服务。您的资料显示您今年&#123;age&#125;岁'</span>.format(name=<span class="string">'小娜'</span>,age=<span class="number">18</span>)</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span><span class="params">(object)</span>:</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,name,age)</span>:</span></span><br><span class="line">		self.name = name</span><br><span class="line">		self.age = age</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span><span class="params">(self)</span>:</span></span><br><span class="line">		<span class="keyword">return</span> <span class="string">'This guy is &#123;self.name&#125;,is &#123;self.age&#125; old'</span>.format(self=self)</span><br><span class="line"></span><br><span class="line"><span class="comment">#通过对象属性</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AssignValue</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, value)</span>:</span></span><br><span class="line">        self.value = value</span><br><span class="line">my_value = AssignValue(<span class="number">6</span>)</span><br><span class="line">print(<span class="string">'value 为: &#123;0.value&#125;'</span>.format(my_value))  <span class="comment"># "0" 是可选的</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#通过映射 list</span></span><br><span class="line">xNa = [<span class="string">'小娜'</span>, <span class="number">18</span>]</span><br><span class="line"><span class="string">'你好，我是&#123;0[0]&#125;, 很高兴为您服务。您的资料显示您今年&#123;0[1]&#125;岁'</span>.format(xNa)</span><br><span class="line"></span><br><span class="line"><span class="comment">#通过映射 dict</span></span><br><span class="line">xNa = &#123;<span class="string">'name'</span>:<span class="string">'小娜'</span>, <span class="string">'age'</span>:<span class="number">18</span>&#125;</span><br><span class="line"><span class="string">'你好，我是&#123;name&#125;, 很高兴为您服务。您的资料显示您今年&#123;age&#125;岁'</span>.format(**xNa)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 可以使用大括号 **&#123;&#125;** 来转义大括号</span></span><br><span class="line"><span class="string">"&#123;&#125; 对应的位置是 &#123;&#123;0&#125;&#125;"</span>.format(<span class="string">"runoob"</span>)</span><br></pre></td></tr></table></figure>
+<p>槽内部的格式化配置:{ &lt;参数标识&gt; &lt;格式控制标记&gt;}</p>
+<p>格式控制标记</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>：</th>
+<th>填充</th>
+<th>对齐</th>
+<th>宽度</th>
+<th>,</th>
+<th>.</th>
+<th>类型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>引导符号</td>
+<td>用于填充的单个字符</td>
+<td>&lt;左对齐    &gt;右对齐    ^居中对齐</td>
+<td>槽设定的输出宽度</td>
+<td>数字的千位分隔符</td>
+<td>浮点数小数精度或字符串最大输出长度</td>
+<td>整数类型b,o,d,x,X    浮点数类型e,E,f    字符类型c,s</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><p>f-string/F字符串（python3.6增加）</p>
+<p>==当中文字符宽度不够时，采用西文字符填充；中西文字符占用宽度不同。==</p>
+<p>中文的空格<strong>chr(12288)</strong></p>
+</li>
+</ul>
+<h2 id="字节串"><a href="#字节串" class="headerlink" title="字节串"></a>字节串</h2><class 'bytes'>
+
+<ul>
+<li>由0个或多个字节组成的有序序列，每字节对应值为0-255</li>
+<li>字节串由前导符b或B与一对单引号/双引号或三个单引号/三个双引号表示，如：b”a\xf6” ，b’’’abcdef<br>1234567890 ‘’’</li>
+<li>0-255间非可打印字符用\xNN方式表示，N是一个十六进制字符</li>
+<li>索引功能，与字符串相同</li>
+<li>切片功能，与字符串相同</li>
+<li>字节串<strong>操作符</strong>，与字符串相同</li>
+<li>字节串处理<strong>函数</strong>，支持len()</li>
+<li>字节串处理<strong>方法</strong>，与字符串类似，参数必须也是字节串。</li>
+<li><p>如果要在网络上传输，或者保存到磁盘上，就需要把<code>str</code>变为以字节为单位的<code>bytes</code>。</p>
+</li>
+<li><p><code>bytes</code>的每个字符都只占用一个字节。</p>
+</li>
+<li><p>Unicode表示的<code>str</code>通过<code>encode()</code>方法可以编码为指定的<code>bytes</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&apos;ABC&apos;.encode(&apos;ascii&apos;) == b&apos;ABC&apos;</span><br><span class="line">&apos;中文&apos;.encode(&apos;utf-8&apos;) == b&apos;\xe4\xb8\xad\xe6\x96\x87&apos;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>纯英文的<code>str</code>可以用<code>ASCII</code>编码为<code>bytes</code>，内容是一样的</p>
+</li>
+<li><p>含有中文的<code>str</code>可以用<code>UTF-8</code>编码为<code>bytes</code>。含有中文的<code>str</code>无法用<code>ASCII</code>编码，因为中文编码的范围超过了<code>ASCII</code>编码的范围，Python会报错。</p>
+</li>
+<li><p>在<code>bytes</code>中，无法显示为ASCII字符的字节，用<code>\x##</code>显示。</p>
+</li>
+<li><p>从网络或磁盘上读取了字节流，读到的数据是<code>bytes</code>。<code>bytes</code>变为<code>str</code>，需要用<code>decode()</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">b&apos;ABC&apos;.decode(&apos;ascii&apos;) ==&apos;ABC&apos;</span><br><span class="line">b&apos;\xe4\xb8\xad\xe6\x96\x87&apos;.decode(&apos;utf-8&apos;) == &apos;中文&apos;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>如果<code>bytes</code>中只有一小部分无效的字节，可以传入<code>errors=&#39;ignore&#39;</code>忽略错误的字节：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">b&apos;\xe4\xb8\xad\xff&apos;.decode(&apos;utf-8&apos;, errors=&apos;ignore&apos;) == &apos;中&apos;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</class></class>
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/字符串/" rel="tag"># 字符串</a>
+          
+            <a href="/tags/字节串/" rel="tag"># 字节串</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/12/03/[python]8.数据类型（一）数值类型/" rel="next" title="python数据类型（一）">
+                <i class="fa fa-chevron-left"></i> python数据类型（一）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/12/08/[python]98.命名空间与作用域/" rel="prev" title="python 命名空间与作用域">
+                python 命名空间与作用域 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">萧遥</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">74</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">10</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">128</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/xiaoyao1949" title="GitHub &rarr; https://github.com/xiaoyao1949" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:xiaoyao1949@outlook.com" title="E-Mail &rarr; mailto:xiaoyao1949@outlook.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#字符串"><span class="nav-number">1.</span> <span class="nav-text">字符串</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字节串"><span class="nav-number">2.</span> <span class="nav-text">字节串</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">萧遥</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.1"></script>
+
+  <script src="/js/src/motion.js?v=7.0.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/schemes/muse.js?v=7.0.1"></script>
+
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.1"></script>
+<script src="/js/src/post-details.js?v=7.0.1"></script>
+
+
+
+  
+
+
+  <script src="/js/src/next-boot.js?v=7.0.1"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+
+  
+<script>
+if ($('body').find('pre.mermaid').length) {
+  $.ajax({
+    type: 'GET',
+    url: '//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js',
+    dataType: 'script',
+    cache: true,
+    success: function() {
+      mermaid.initialize({
+        theme: 'default',
+        logLevel: 3,
+        flowchart: { curve: 'linear' },
+        gantt: { axisFormat: '%m/%d/%Y' },
+        sequence: { actorMargin: 50 }
+      });
+    }
+  });
+}
+</script>
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+<style>
+  .copy-btn {
+    display: inline-block;
+    padding: 6px 12px;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 20px;
+    color: #333;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    
+      background-color: #fff;
+      border: none;
+    
+    user-select: none;
+    outline: 0;
+  }
+
+  .highlight-wrap .copy-btn {
+    transition: opacity .3s ease-in-out;
+    opacity: 0;
+    padding: 2px 6px;
+    position: absolute;
+    
+      right: 0px;
+      height: 42px;
+    
+  }
+
+  .highlight-wrap:hover .copy-btn,
+  .highlight-wrap .copy-btn:focus {
+    opacity: 1;
+  }
+
+  .highlight-wrap {
+    position: relative;
+  }
+</style>
+<script>
+  $('.highlight').each(function(i, e) {
+    var $wrap = $('<div>').addClass('highlight-wrap');
+    $(e).after($wrap);
+    $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function(e) {
+      var code = $(this).parent().find('.code').find('.line').map(function(i, e) {
+        return $(e).text();
+      }).toArray().join('\n');
+      var ta = document.createElement('textarea');
+      var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+      ta.style.top = yPosition + 'px'; // Prevent page scroll
+      ta.style.position = 'absolute';
+      ta.style.opacity = '0';
+      ta.readOnly = true;
+      ta.value = code;
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0, code.length);
+      ta.readOnly = false;
+      var result = document.execCommand('copy');
+      
+        if (result) $(this).text('复制成功');
+        else $(this).text('复制失败');
+      
+      ta.blur(); // For iOS
+      $(this).blur();
+    })).on('mouseleave', function(e) {
+      var $b = $(this).find('.copy-btn');
+      setTimeout(function() {
+        $b.text('复制');
+      }, 300);
+    }).append(e);
+  })
+</script>
+
+
+</body>
+</html>

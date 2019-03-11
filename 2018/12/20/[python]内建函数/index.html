@@ -1,0 +1,1571 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '7.0.1',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="共69个">
+<meta name="keywords" content="python,内置函数">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python内置函数">
+<meta property="og:url" content="http://yoursite.com/2018/12/20/[python]内建函数/index.html">
+<meta property="og:site_name" content="一个代码手艺人的技术博客">
+<meta property="og:description" content="共69个">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-03-11T13:38:58.648Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="python内置函数">
+<meta name="twitter:description" content="共69个">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/12/20/[python]内建函数/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>python内置函数 | 一个代码手艺人的技术博客</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">一个代码手艺人的技术博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">为学日益</h1>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/20/[python]内建函数/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="萧遥">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一个代码手艺人的技术博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">python内置函数
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-12-20 10:44:30" itemprop="dateCreated datePublished" datetime="2018-12-20T10:44:30+08:00">2018-12-20</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-03-11 21:38:58" itemprop="dateModified" datetime="2019-03-11T21:38:58+08:00">2019-03-11</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/python基础/" itemprop="url" rel="index"><span itemprop="name">python基础</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>共69个<br><a id="more"></a></p>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>描述</th>
+<th>实例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>abs()</td>
+<td>返回绝对值，复数则返回模</td>
+<td>abs(-3)</td>
+</tr>
+<tr>
+<td>all()</td>
+<td>如果iterable中元素都是True或iterable为空，则返回True</td>
+<td>all(iterable)</td>
+</tr>
+<tr>
+<td>any()</td>
+<td>如果iterable中任一元素是True返回True，iterable为空返回False</td>
+<td>any(iterable)</td>
+</tr>
+<tr>
+<td>ascii()</td>
+<td>返回obj的repr()输出，对于非可打印字符采用\x,\u,\U表示</td>
+<td>ascii(obj)</td>
+</tr>
+<tr>
+<td>bin()</td>
+<td>将整数转化为二进制字符串，0b开头</td>
+<td>bin(10)</td>
+</tr>
+<tr>
+<td>bool()</td>
+<td>计算参数，返回True或False</td>
+<td>bool(x)</td>
+</tr>
+<tr>
+<td>breakpoint()</td>
+<td>使用该函数进入Debug环境</td>
+<td>breakpoint(*args, **kws)</td>
+</tr>
+<tr>
+<td>bytearray()</td>
+<td>返回一个新的字节数组</td>
+<td>bytearray()</td>
+</tr>
+<tr>
+<td>byets()</td>
+<td>将src转换成一个新的字节串对象</td>
+<td>bytes(src)</td>
+</tr>
+<tr>
+<td>callable()</td>
+<td>如果对象可调用则返回True，反之False</td>
+<td>callable(obj)</td>
+</tr>
+<tr>
+<td>chr()</td>
+<td>返回int在Unicode编码下代表的字符</td>
+<td>chr(65)</td>
+</tr>
+<tr>
+<td>classmethod()</td>
+<td>将方法转换为类方法</td>
+<td></td>
+</tr>
+<tr>
+<td>compile()</td>
+<td>将src编译为代码或AST对象</td>
+<td>compile(src, filename, mode)</td>
+</tr>
+<tr>
+<td>complex()</td>
+<td>将输入的数值/元组/字符串转换为附属对象并返回</td>
+<td></td>
+</tr>
+<tr>
+<td>delatter()</td>
+<td>删除obj对象的attr属性</td>
+<td>delattr(obj, attr)</td>
+</tr>
+<tr>
+<td>dict()</td>
+<td>返回一个新的字典对象</td>
+<td>dict()</td>
+</tr>
+<tr>
+<td>dir()</td>
+<td>返回obj的所有公开属性</td>
+<td>dir(obj)</td>
+</tr>
+<tr>
+<td>divmod()</td>
+<td>返回（a//b, a%b）</td>
+<td>div(10,3)</td>
+</tr>
+<tr>
+<td>enumerate()</td>
+<td>返回由iterable初始化的枚举对象（序号与值组成的二元组序列）</td>
+<td>enumerate(iterable)</td>
+</tr>
+<tr>
+<td>eval()</td>
+<td>将字符串表达式exp作为合法的语句传入python进行解释执行</td>
+<td>eval(exp)</td>
+</tr>
+<tr>
+<td>exec()</td>
+<td>执行传出的string或code对象</td>
+<td>exec(obj)</td>
+</tr>
+<tr>
+<td>filter()</td>
+<td>将iterable对象传入函数func，将结果为True的对象构造成一个迭代器</td>
+<td>filter(func, iterable)</td>
+</tr>
+<tr>
+<td>float()</td>
+<td>将数字或字符串转换为浮点数</td>
+<td>float(‘9.6’)</td>
+</tr>
+<tr>
+<td>format()</td>
+<td>格式化</td>
+<td></td>
+</tr>
+<tr>
+<td>frozenset()</td>
+<td>创建一个不可修改的集合对象，只可用iterable参数初始化</td>
+<td>frozenset([iterable])</td>
+</tr>
+<tr>
+<td>getattr()</td>
+<td>返回obj对象的attr属性</td>
+<td>getattr(obj, attr)</td>
+</tr>
+<tr>
+<td>globals()</td>
+<td>返回由当前全局变量组成的字典</td>
+<td></td>
+</tr>
+<tr>
+<td>hasattr()</td>
+<td>如果obj对象有attr属性则返回True，否则Fasle</td>
+<td>hasattr(obj, attr)</td>
+</tr>
+<tr>
+<td>hash()</td>
+<td>返回对象obj的哈希值</td>
+<td>hash(obj)</td>
+</tr>
+<tr>
+<td>help()</td>
+<td>输出obj对象的帮助文档</td>
+<td>help(obj)</td>
+</tr>
+<tr>
+<td>hex()</td>
+<td>将整数转换成十六进制，返回0x开头的小写字符串</td>
+<td></td>
+</tr>
+<tr>
+<td>id()</td>
+<td>返回obj在python中的id，一般指Cpython中对象的内存地址</td>
+<td>id(obj)</td>
+</tr>
+<tr>
+<td>input()</td>
+<td>在屏幕上显示提示，并等待输入</td>
+<td>input(‘请输入’)</td>
+</tr>
+<tr>
+<td>int()</td>
+<td>将对象转换成整数</td>
+<td>int(9.9)</td>
+</tr>
+<tr>
+<td>isinstance()</td>
+<td>如果对象obj是类cl的实例则返回True，否则False</td>
+<td>isinstance(obj, cl)</td>
+</tr>
+<tr>
+<td>issubclass()</td>
+<td>如果类c1是c2的子类，则返回True，否则False</td>
+<td>issubclass(c1, c2)</td>
+</tr>
+<tr>
+<td>iter()</td>
+<td>返回由obj对象构造的迭代器，obj必须是可迭代对象</td>
+<td>iter(obj)</td>
+</tr>
+<tr>
+<td>len()</td>
+<td>返回对象的长度</td>
+<td>len([1,2,3])</td>
+</tr>
+<tr>
+<td>list()</td>
+<td>构造一个列表，参数可以是iterable类型</td>
+<td>list(range(3))</td>
+</tr>
+<tr>
+<td>locals()</td>
+<td>返回由当前局部变量组成的字典</td>
+<td></td>
+</tr>
+<tr>
+<td>map()</td>
+<td>返回将iterable中每个对象传入函数func而构造的迭代器</td>
+<td>map(func, iterable)</td>
+</tr>
+<tr>
+<td>max()</td>
+<td>返回最大值</td>
+<td>max(1,3)</td>
+</tr>
+<tr>
+<td>memoryview()</td>
+<td>返回obj对象的Memory View信息</td>
+<td>memoryview(obj)</td>
+</tr>
+<tr>
+<td>min()</td>
+<td>返回最小值</td>
+<td>min(1,3)</td>
+</tr>
+<tr>
+<td>next()</td>
+<td>返回迭代器中下一个元素，回改变迭代器状态</td>
+<td>next(iterator)</td>
+</tr>
+<tr>
+<td>object()</td>
+<td>创建python中最基础对象</td>
+<td></td>
+</tr>
+<tr>
+<td>oct()</td>
+<td>整数转换成八进制，返回0o开头的字符串</td>
+<td>oct(10)</td>
+</tr>
+<tr>
+<td>open()</td>
+<td>打开文件，返回文件对象</td>
+<td>open(‘xxx.txt’, ‘r’)</td>
+</tr>
+<tr>
+<td>ord()</td>
+<td>返回字符的Unicode编码值</td>
+<td>ord(‘c’)</td>
+</tr>
+<tr>
+<td>pow()</td>
+<td>返回x的y次方，可选参数z用于取模</td>
+<td>pow(x,y[,z])</td>
+</tr>
+<tr>
+<td>print()</td>
+<td>输出内容</td>
+<td>print(‘hello’)</td>
+</tr>
+<tr>
+<td>property()</td>
+<td>装饰器函数，将方法转换成属性</td>
+<td></td>
+</tr>
+<tr>
+<td>range()</td>
+<td>返回单调数列，可设置步长</td>
+<td>range(start,stop[,step])</td>
+</tr>
+<tr>
+<td>repr()</td>
+<td>调用obj对象的__repr__()方法，返回目标对象的可打印字符串</td>
+<td>repr(obj)</td>
+</tr>
+<tr>
+<td>reversed()</td>
+<td>返回将序列seq逆序后的迭代器</td>
+<td>reversed(seq)</td>
+</tr>
+<tr>
+<td>round()</td>
+<td>对浮点数取近似</td>
+<td>round(9.653,2)</td>
+</tr>
+<tr>
+<td>set()</td>
+<td>创建一个集合，参数可以是iterable</td>
+<td>set()</td>
+</tr>
+<tr>
+<td>setattr()</td>
+<td>为obj对象增加attr属性，属性值为value</td>
+<td>setattr(obj,attr,value)</td>
+</tr>
+<tr>
+<td>slice()</td>
+<td>返回可切片对象</td>
+<td>slice(start, stop[, step])</td>
+</tr>
+<tr>
+<td>sorted()</td>
+<td>排序</td>
+<td>sorted(iterable)</td>
+</tr>
+<tr>
+<td>staticmethod()</td>
+<td>装饰器函数，将方法转换为静态方法。</td>
+<td></td>
+</tr>
+<tr>
+<td>str()</td>
+<td>转换对象为字符串对象</td>
+<td>str(999)</td>
+</tr>
+<tr>
+<td>sum()</td>
+<td>求和,参数可以是iterable</td>
+<td>sum(1, 3)</td>
+</tr>
+<tr>
+<td>super()</td>
+<td>用于在子类中调用父类中被重写的方法。</td>
+<td></td>
+</tr>
+<tr>
+<td>tuple()</td>
+<td>创建一个新元组，，参数可以是iterable</td>
+<td>tuple()</td>
+</tr>
+<tr>
+<td>type()</td>
+<td>返回对象的类型</td>
+<td>type(‘’)</td>
+</tr>
+<tr>
+<td>vars()</td>
+<td>返回obj模块/类/对象/的__dict__属性</td>
+<td>vars(obj)</td>
+</tr>
+<tr>
+<td>zip()</td>
+<td>从各iterable对象中提取元素拼成元组，形成并返回新的迭代器</td>
+<td>zip(*iterables)</td>
+</tr>
+<tr>
+<td>__import__()</td>
+<td>使用关键字import导入模块时调用的查找函数</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><p>评估函数eval()</p>
+<p>去掉参数最外侧引号并执行余下语句的函数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">print(eval(<span class="string">'1+2'</span>))   <span class="comment"># 3</span></span><br><span class="line">eval(<span class="string">'print('</span>Hello<span class="string">')'</span>)   <span class="comment"># Hello</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+            <a href="/tags/内置函数/" rel="tag"># 内置函数</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/12/19/[python]保留字/" rel="next" title="python关键字">
+                <i class="fa fa-chevron-left"></i> python关键字
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/12/20/[python]变量命名规范/" rel="prev" title="python变量">
+                python变量 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">萧遥</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">74</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">10</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">128</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/xiaoyao1949" title="GitHub &rarr; https://github.com/xiaoyao1949" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:xiaoyao1949@outlook.com" title="E-Mail &rarr; mailto:xiaoyao1949@outlook.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">萧遥</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.1"></script>
+
+  <script src="/js/src/motion.js?v=7.0.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/schemes/muse.js?v=7.0.1"></script>
+
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.1"></script>
+<script src="/js/src/post-details.js?v=7.0.1"></script>
+
+
+
+  
+
+
+  <script src="/js/src/next-boot.js?v=7.0.1"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+
+  
+<script>
+if ($('body').find('pre.mermaid').length) {
+  $.ajax({
+    type: 'GET',
+    url: '//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js',
+    dataType: 'script',
+    cache: true,
+    success: function() {
+      mermaid.initialize({
+        theme: 'default',
+        logLevel: 3,
+        flowchart: { curve: 'linear' },
+        gantt: { axisFormat: '%m/%d/%Y' },
+        sequence: { actorMargin: 50 }
+      });
+    }
+  });
+}
+</script>
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+<style>
+  .copy-btn {
+    display: inline-block;
+    padding: 6px 12px;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 20px;
+    color: #333;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    
+      background-color: #fff;
+      border: none;
+    
+    user-select: none;
+    outline: 0;
+  }
+
+  .highlight-wrap .copy-btn {
+    transition: opacity .3s ease-in-out;
+    opacity: 0;
+    padding: 2px 6px;
+    position: absolute;
+    
+      right: 0px;
+      height: 42px;
+    
+  }
+
+  .highlight-wrap:hover .copy-btn,
+  .highlight-wrap .copy-btn:focus {
+    opacity: 1;
+  }
+
+  .highlight-wrap {
+    position: relative;
+  }
+</style>
+<script>
+  $('.highlight').each(function(i, e) {
+    var $wrap = $('<div>').addClass('highlight-wrap');
+    $(e).after($wrap);
+    $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function(e) {
+      var code = $(this).parent().find('.code').find('.line').map(function(i, e) {
+        return $(e).text();
+      }).toArray().join('\n');
+      var ta = document.createElement('textarea');
+      var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+      ta.style.top = yPosition + 'px'; // Prevent page scroll
+      ta.style.position = 'absolute';
+      ta.style.opacity = '0';
+      ta.readOnly = true;
+      ta.value = code;
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0, code.length);
+      ta.readOnly = false;
+      var result = document.execCommand('copy');
+      
+        if (result) $(this).text('复制成功');
+        else $(this).text('复制失败');
+      
+      ta.blur(); // For iOS
+      $(this).blur();
+    })).on('mouseleave', function(e) {
+      var $b = $(this).find('.copy-btn');
+      setTimeout(function() {
+        $b.text('复制');
+      }, 300);
+    }).append(e);
+  })
+</script>
+
+
+</body>
+</html>

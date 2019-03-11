@@ -1,0 +1,1395 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '7.0.1',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="数据工程，web后台，游戏开发，人工智能，VR…">
+<meta name="keywords" content="python,应用方向">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python应用方向">
+<meta property="og:url" content="http://yoursite.com/2018/10/14/[python]100.方向/index.html">
+<meta property="og:site_name" content="一个代码手艺人的技术博客">
+<meta property="og:description" content="数据工程，web后台，游戏开发，人工智能，VR…">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-03-11T13:38:58.047Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="python应用方向">
+<meta name="twitter:description" content="数据工程，web后台，游戏开发，人工智能，VR…">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/10/14/[python]100.方向/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>python应用方向 | 一个代码手艺人的技术博客</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">一个代码手艺人的技术博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">为学日益</h1>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/14/[python]100.方向/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="萧遥">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一个代码手艺人的技术博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">python应用方向
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-10-14 13:12:24" itemprop="dateCreated datePublished" datetime="2018-10-14T13:12:24+08:00">2018-10-14</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-03-11 21:38:58" itemprop="dateModified" datetime="2019-03-11T21:38:58+08:00">2019-03-11</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/python基础/" itemprop="url" rel="index"><span itemprop="name">python基础</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>数据工程，web后台，游戏开发，人工智能，VR…<br><a id="more"></a></p>
+<h2 id="数据工程："><a href="#数据工程：" class="headerlink" title="数据工程："></a>数据工程：</h2><p>数据采集—-&gt;数据表示—-&gt;数据清洗—-&gt;数据分析（统计）—-&gt;数据可视化—-&gt;数据挖掘—-&gt;人工智能</p>
+<p>数据采集：从web或者其他地方采集数据</p>
+<ul>
+<li><p>requests: 最友好的网络爬虫功能库</p>
+<p>提供了简单易用的类HTTP协议网络爬虫功能<br>支持连接池、SSL、Cookies、HTTP(S)代理等<br>Python最主要的页面级网络爬虫功能库</p>
+</li>
+<li><p>scrapy：优秀的网络爬虫框架</p>
+<p>提供了构建网络爬虫系统的框架功能，功能半成品<br>支持批量和定时网页爬取、提供数据处理流程等<br>Python最主要且最专业的网络爬虫框架</p>
+</li>
+<li><p>pyspider: 强大的Web页面爬取系统</p>
+<p>提供了完整的网页爬取系统构建功能<br>支持数据库后端、消息队列、优先级、分布式架构等<br>Python重要的网络爬虫类第三方库</p>
+</li>
+<li><p>Beautiful Soup: HTML和XML的解析库</p>
+<p> 提供了解析HTML和XML等Web信息的功能<br>又名beautifulsoup4或bs4，可以加载多种解析引擎<br>常与网络爬虫库搭配使用，如Scrapy、requests等</p>
+</li>
+<li><p>Re: 正则表达式解析和处理功能库</p>
+<p>提供了定义和解析正则表达式的一批通用功能<br>可用于各类场景，包括定点的Web信息提取<br>Python最主要的标准库之一，无需安装</p>
+</li>
+<li><p>Python-Goose: 提取文章类型Web页面的功能库</p>
+<p>提供了对Web页面中文章信息/视频等元数据的提取功能</p>
+<p>针对特定类型Web页面，应用覆盖面较广</p>
+<p>Python最主要的Web信息提取库</p>
+</li>
+</ul>
+<p>数据表示：采用合适方式用程序表达数据</p>
+<p>数据清洗：数据归一化、数据转换、异常值处理</p>
+<p>数据分析（统计）：数据的概要理解，数量、分布、中位数等</p>
+<ul>
+<li><p>Numpy：表达N维数组的最基本库</p>
+<p><a href="http://www.numpy.org/" target="_blank" rel="noopener">http://www.numpy.org/</a></p>
+<p>Python接口使用，C语言实现，计算速度优异<br>Python数据分析及科学计算的基础库，支撑Pandas等<br>提供直接的矩阵运算、广播函数、线性代数等功能</p>
+</li>
+</ul>
+<ul>
+<li><p>Pandas：Python数据分析高层次应用库</p>
+<p><a href="http://pandas.pydata.org/" target="_blank" rel="noopener">http://pandas.pydata.org/</a></p>
+<p>提供了简单易用的数据结构和数据分析工具<br>理解数据类型与索引的关系，操作索引即操作数据<br>Python最主要的数据分析功能库，基于Numpy开发</p>
+<p>Series = 索引 + 一维数据</p>
+<p>DataFrame = 行列索引 + 二维数据</p>
+</li>
+<li><p>SciPy: 数学、科学和工程计算功能库</p>
+<p><a href="https://www.scipy.org/" target="_blank" rel="noopener">https://www.scipy.org/</a></p>
+<p>提供了一批数学算法及工程数据运算功能<br>类似Matlab，可用于如傅里叶变换、信号处理等应用<br>Python最主要的科学计算功能库，基于Numpy开发</p>
+<p>稀疏图压缩类</p>
+<p>稀疏运算类</p>
+<p>优化算法类</p>
+<p>傅里叶变换类</p>
+<p>信号处理类</p>
+<p>线性代数类</p>
+<p>图像处理类</p>
+</li>
+</ul>
+<p>数据可视化：直观展示数据内涵的方式</p>
+<ul>
+<li><p>Matplotlib: 高质量的二维数据可视化功能库</p>
+<p>提供了超过100种数据可视化展示效果<br>通过matplotlib.pyplot子库调用各可视化效果<br>Python最主要的数据可视化功能库，基于Numpy开发</p>
+</li>
+<li><p>Seaborn: 统计类数据可视化功能库</p>
+<p> 提供了一批高层次的统计类数据可视化展示效果<br>主要展示数据间分布、分类和线性关系等内容<br>基于Matplotlib开发，支持Numpy和Pandas</p>
+</li>
+<li><p>Mayavi：三维科学数据可视化功能库</p>
+<p>提供了一批简单易用的3D科学计算数据可视化展示效果<br>目前版本是Mayavi2，三维可视化最主要的第三方库<br>支持Numpy、TVTK、Traits、Envisage等第三方库</p>
+</li>
+</ul>
+<p>数据挖掘：从数据分析获得知识，产生数据外的价值</p>
+<p>人工智能：数据/语言/图像/视觉等方面深度分析与决策</p>
+<h2 id="web后端开发"><a href="#web后端开发" class="headerlink" title="web后端开发"></a>web后端开发</h2><ul>
+<li><p>Django: 最流行的Web应用框架</p>
+<p>提供了构建Web系统的基本应用框架<br>MTV模式：模型(model)、模板(Template)、视图(Views)<br>Python最重要的Web应用框架，略微复杂的应用框架</p>
+</li>
+<li><p>Pyramid: 规模适中的Web应用框架</p>
+<p>提供了简单方便构建Web系统的应用框架<br>不大不小，规模适中，适合快速构建并适度扩展类应用<br>Python产品级Web应用框架，起步简单可扩展性好</p>
+</li>
+<li><p>Flask: Web应用开发微框架</p>
+<p> 提供了最简单构建Web系统的应用框架<br> 特点是：简单、规模小、快速<br> Django &gt; Pyramid &gt; Flask</p>
+</li>
+</ul>
+<h2 id="网络应用开发"><a href="#网络应用开发" class="headerlink" title="网络应用开发"></a>网络应用开发</h2><ul>
+<li><p>WeRoBot: 微信公众号开发框架</p>
+<p>提供了解析微信服务器消息及反馈消息的功能<br>建立微信机器人的重要技术手段</p>
+</li>
+<li><p>aip: 百度AI开放平台接口</p>
+<p>提供了访问百度AI服务的Python功能接口<br>语音、人脸、OCR、NLP、知识图谱、图像搜索等领域<br>Python百度AI应用的最主要方式</p>
+</li>
+<li><p>MyQR: 二维码生成第三方库</p>
+<p>提供了生成二维码的系列功能<br>基本二维码、艺术二维码和动态二维码</p>
+</li>
+</ul>
+<h2 id="网络安全"><a href="#网络安全" class="headerlink" title="网络安全"></a>网络安全</h2><h2 id="自动运维"><a href="#自动运维" class="headerlink" title="自动运维"></a>自动运维</h2><h2 id="自动化测试"><a href="#自动化测试" class="headerlink" title="自动化测试"></a>自动化测试</h2><h2 id="文本处理"><a href="#文本处理" class="headerlink" title="文本处理"></a>文本处理</h2><ul>
+<li><p>PyPDF2：用来处理pdf文件的工具集</p>
+<p> 提供了一批处理PDF文件的计算功能<br>支持获取信息、分隔/整合文件、加密解密等<br>完全Python语言实现，不需要额外依赖，功能稳定</p>
+</li>
+<li><p>Python-docx：创建或更新Microsoft Word文件的第三方库</p>
+<p>提供创建或更新.doc .docx等文件的计算功能<br>增加并配置段落、图片、表格、文字等，功能全面</p>
+</li>
+</ul>
+<p>-</p>
+<h2 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h2><h2 id="大数据"><a href="#大数据" class="headerlink" title="大数据"></a>大数据</h2><h2 id="人工智能"><a href="#人工智能" class="headerlink" title="人工智能"></a>人工智能</h2><ul>
+<li><p>自然语言处理</p>
+<p>NLTK：自然语言文本处理第三方库<br>• 提供了一批简单易用的自然语言文本处理功能<br>• 支持语言文本分类、标记、语法句法、语义分析等<br>• 最优秀的Python自然语言处理库</p>
+</li>
+<li><p>机器学习</p>
+<p>Scikit-learn：机器学习方法工具集</p>
+<p>提供一批统一化的机器学习方法功能接口<br>提供聚类、分类、回归、强化学习等计算功能<br>机器学习最基本且最优秀的Python第三方库</p>
+<p>TensorFlow：AlphaGo背后的机器学习计算框架</p>
+<p>谷歌公司推动的开源机器学习框架<br>将数据流图作为基础，图节点代表运算，边代表张量<br>应用机器学习方法的一种方式，支撑谷歌人工智能应用</p>
+<p>MXNet：基于神经网络的深度学习计算框架</p>
+<p>提供可扩展的神经网络及深度学习计算功能<br>可用于自动驾驶、机器翻译、语音识别等众多领域<br>Python最重要的深度学习计算框架</p>
+</li>
+<li><p>深度学习</p>
+</li>
+</ul>
+<h2 id="图形用户界面"><a href="#图形用户界面" class="headerlink" title="图形用户界面"></a>图形用户界面</h2><ul>
+<li><p>PyQt5: Qt开发框架的Python接口</p>
+<p>提供了创建Qt5程序的Python API接口<br>Qt是非常成熟的跨平台桌面应用开发系统，完备GUI<br>推荐的Python GUI开发第三方库</p>
+</li>
+<li><p>wxPython: 跨平台GUI开发框架</p>
+<p>提供了专用于Python的跨平台GUI开发框架</p>
+</li>
+<li><p>PyGObject: 使用GTK+开发GUI的功能库</p>
+<p>提供了整合GTK+、WebKitGTK+等库的功能<br>GTK+：跨平台的一种用户图形界面GUI框架<br>实例：Anaconda采用该库构建GUI</p>
+</li>
+<li><p>tkinter</p>
+<p>标准库</p>
+</li>
+</ul>
+<h2 id="游戏开发"><a href="#游戏开发" class="headerlink" title="游戏开发"></a>游戏开发</h2><ul>
+<li><p>PyGame: 简单的游戏开发功能库</p>
+<p>提供了基于SDL的简单游戏开发功能及实现引擎<br>理解游戏对外部输入的响应机制及角色构建和交互机制<br>Python游戏入门最主要的第三方库</p>
+</li>
+<li><p>Panda3D: 开源、跨平台的3D渲染和游戏开发库</p>
+<p> 一个3D游戏引擎，提供Python和C++两种接口<br>支持很多先进特性：法线贴图、光泽贴图、卡通渲染等<br>由迪士尼和卡尼基梅隆大学共同开发</p>
+</li>
+<li><p>cocos2d: 构建2D游戏和图形界面交互式应用的框架</p>
+<p>提供了基于OpenGL的游戏开发图形渲染功能<br>支持GPU加速，采用树形结构分层管理游戏对象类型<br>适用于2D专业级游戏开发</p>
+</li>
+</ul>
+<h2 id="虚拟现实-VR"><a href="#虚拟现实-VR" class="headerlink" title="虚拟现实 VR"></a>虚拟现实 VR</h2><ul>
+<li><p>VR Zero: 在树莓派上开发VR应用的Python库</p>
+<p>提供大量与VR开发相关的功能<br>针对树莓派的VR开发库，支持设备小型化，配置简单化<br>非常适合初学者实践VR开发及应用</p>
+</li>
+<li><p>pyovr: Oculus Rift的Python开发接口</p>
+<p> 针对Oculus VR设备的Python开发库<br>基于成熟的VR设备，提供全套文档，工业级应用设备<br>Python+虚拟现实领域探索的一种思路</p>
+</li>
+<li><p>Vizard: 基于Python的通用VR开发引擎</p>
+<p>专业的企业级虚拟现实开发引擎<br>提供详细的官方文档<br>支持多种主流的VR硬件设备，具有一定通用性</p>
+</li>
+</ul>
+<h2 id="图形艺术"><a href="#图形艺术" class="headerlink" title="图形艺术"></a>图形艺术</h2><ul>
+<li><p>Quads: 迭代的艺术</p>
+<p>对图片进行四分迭代，形成像素风<br>可以生成动图或静图图像<br>简单易用，具有很高展示度</p>
+</li>
+<li><p>ascii_art: ASCII艺术库</p>
+<p>将普通图片转为ASCII艺术风格<br>输出可以是纯文本或彩色文本<br>可采用图片格式输出</p>
+</li>
+<li><p>turtle: 海龟绘图体系</p>
+</li>
+</ul>
+<p>-</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+            <a href="/tags/应用方向/" rel="tag"># 应用方向</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/10/12/[python]10.字符编码/" rel="next" title="python字符编码">
+                <i class="fa fa-chevron-left"></i> python字符编码
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/10/16/[python]11.数据类型（三）组合类型/" rel="prev" title="python数据类型（三）">
+                python数据类型（三） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">萧遥</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">74</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">10</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">128</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/xiaoyao1949" title="GitHub &rarr; https://github.com/xiaoyao1949" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:xiaoyao1949@outlook.com" title="E-Mail &rarr; mailto:xiaoyao1949@outlook.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据工程："><span class="nav-number">1.</span> <span class="nav-text">数据工程：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#web后端开发"><span class="nav-number">2.</span> <span class="nav-text">web后端开发</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网络应用开发"><span class="nav-number">3.</span> <span class="nav-text">网络应用开发</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网络安全"><span class="nav-number">4.</span> <span class="nav-text">网络安全</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自动运维"><span class="nav-number">5.</span> <span class="nav-text">自动运维</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自动化测试"><span class="nav-number">6.</span> <span class="nav-text">自动化测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文本处理"><span class="nav-number">7.</span> <span class="nav-text">文本处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据库"><span class="nav-number">8.</span> <span class="nav-text">数据库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#大数据"><span class="nav-number">9.</span> <span class="nav-text">大数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#人工智能"><span class="nav-number">10.</span> <span class="nav-text">人工智能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图形用户界面"><span class="nav-number">11.</span> <span class="nav-text">图形用户界面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#游戏开发"><span class="nav-number">12.</span> <span class="nav-text">游戏开发</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#虚拟现实-VR"><span class="nav-number">13.</span> <span class="nav-text">虚拟现实 VR</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图形艺术"><span class="nav-number">14.</span> <span class="nav-text">图形艺术</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">萧遥</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.1"></script>
+
+  <script src="/js/src/motion.js?v=7.0.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/schemes/muse.js?v=7.0.1"></script>
+
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.1"></script>
+<script src="/js/src/post-details.js?v=7.0.1"></script>
+
+
+
+  
+
+
+  <script src="/js/src/next-boot.js?v=7.0.1"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+
+  
+<script>
+if ($('body').find('pre.mermaid').length) {
+  $.ajax({
+    type: 'GET',
+    url: '//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js',
+    dataType: 'script',
+    cache: true,
+    success: function() {
+      mermaid.initialize({
+        theme: 'default',
+        logLevel: 3,
+        flowchart: { curve: 'linear' },
+        gantt: { axisFormat: '%m/%d/%Y' },
+        sequence: { actorMargin: 50 }
+      });
+    }
+  });
+}
+</script>
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+<style>
+  .copy-btn {
+    display: inline-block;
+    padding: 6px 12px;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 20px;
+    color: #333;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    
+      background-color: #fff;
+      border: none;
+    
+    user-select: none;
+    outline: 0;
+  }
+
+  .highlight-wrap .copy-btn {
+    transition: opacity .3s ease-in-out;
+    opacity: 0;
+    padding: 2px 6px;
+    position: absolute;
+    
+      right: 0px;
+      height: 42px;
+    
+  }
+
+  .highlight-wrap:hover .copy-btn,
+  .highlight-wrap .copy-btn:focus {
+    opacity: 1;
+  }
+
+  .highlight-wrap {
+    position: relative;
+  }
+</style>
+<script>
+  $('.highlight').each(function(i, e) {
+    var $wrap = $('<div>').addClass('highlight-wrap');
+    $(e).after($wrap);
+    $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function(e) {
+      var code = $(this).parent().find('.code').find('.line').map(function(i, e) {
+        return $(e).text();
+      }).toArray().join('\n');
+      var ta = document.createElement('textarea');
+      var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+      ta.style.top = yPosition + 'px'; // Prevent page scroll
+      ta.style.position = 'absolute';
+      ta.style.opacity = '0';
+      ta.readOnly = true;
+      ta.value = code;
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0, code.length);
+      ta.readOnly = false;
+      var result = document.execCommand('copy');
+      
+        if (result) $(this).text('复制成功');
+        else $(this).text('复制失败');
+      
+      ta.blur(); // For iOS
+      $(this).blur();
+    })).on('mouseleave', function(e) {
+      var $b = $(this).find('.copy-btn');
+      setTimeout(function() {
+        $b.text('复制');
+      }, 300);
+    }).append(e);
+  })
+</script>
+
+
+</body>
+</html>

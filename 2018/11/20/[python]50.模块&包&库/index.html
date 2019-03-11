@@ -1,0 +1,1464 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '7.0.1',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="python中模块、包、库的概念与从构建到使用及发布的流程。">
+<meta name="keywords" content="python,第三方库,模块,库,包">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python的模块&amp;包&amp;库">
+<meta property="og:url" content="http://yoursite.com/2018/11/20/[python]50.模块&包&库/index.html">
+<meta property="og:site_name" content="一个代码手艺人的技术博客">
+<meta property="og:description" content="python中模块、包、库的概念与从构建到使用及发布的流程。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-03-11T13:38:58.489Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="python的模块&amp;包&amp;库">
+<meta name="twitter:description" content="python中模块、包、库的概念与从构建到使用及发布的流程。">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/11/20/[python]50.模块&包&库/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>python的模块&包&库 | 一个代码手艺人的技术博客</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">一个代码手艺人的技术博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">为学日益</h1>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/20/[python]50.模块&包&库/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="萧遥">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一个代码手艺人的技术博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">python的模块&包&库
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-11-20 13:43:39" itemprop="dateCreated datePublished" datetime="2018-11-20T13:43:39+08:00">2018-11-20</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-03-11 21:38:58" itemprop="dateModified" datetime="2019-03-11T21:38:58+08:00">2019-03-11</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/python基础/" itemprop="url" rel="index"><span itemprop="name">python基础</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>python中模块、包、库的概念与从构建到使用及发布的流程。<br><a id="more"></a></p>
+<h2 id="模块-Module"><a href="#模块-Module" class="headerlink" title="模块 Module"></a>模块 Module</h2><ul>
+<li><p>模块是以单个文件为命名空间的代码片段。</p>
+<p>模块是一个单独的.py文件，模块名就是文件名</p>
+<p>模块中可以引入其他模块，并由一些python语法来约束和管理</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">graph TD</span><br><span class="line">mk1((模块1 a.py))</span><br><span class="line">mk2((模块2 b.py))</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>模块的构建</p>
+<p>构建原则——如何编写一个好的.py文件：</p>
+<ul>
+<li>功能闭包：一个模块实现单一且完整的功能</li>
+<li>抽象适度：用函数或类进行抽象，结合功能选择合适抽象</li>
+<li>操作闭包：模块无顶层可执行语句，导入时无输出。</li>
+<li>在if-name-main 中编写单元测试部分</li>
+<li>模块首行编写模块描述。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 文件名：a.py</span></span><br><span class="line"><span class="comment"># 这是一个实例模块：包含全局变量，类，函数，可执行语句</span></span><br><span class="line"></span><br><span class="line">var = <span class="number">3</span></span><br><span class="line">_var1 = <span class="number">0.2</span></span><br><span class="line">__var2 = <span class="number">3</span>+<span class="number">4j</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyClass</span><span class="params">(object)</span>:</span></span><br><span class="line">    ClassVar = <span class="string">'hello'</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">func</span><span class="params">(self)</span>:</span></span><br><span class="line">        print(<span class="string">'MyClass.func called'</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">fun</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">'fun called'</span>)</span><br><span class="line"></span><br><span class="line">print(<span class="string">'print statement'</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>模块的使用</p>
+<ul>
+<li><p>直接运行。</p>
+<p>解释器会逐条运行代码，依次在内存中生成三个全局变量对象，生成一个类对象，生成一个函数对象，以及执行print语句</p>
+</li>
+<li><p>模块外部引用</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># b.py</span></span><br><span class="line"><span class="comment"># 演示在b模块中引入a模块</span></span><br><span class="line"><span class="keyword">import</span> a</span><br><span class="line"></span><br><span class="line">print(a.var)</span><br><span class="line">print(a._var1)</span><br><span class="line">print(a.__var2)</span><br><span class="line"></span><br><span class="line">mc = a.MyClass()</span><br><span class="line">print(a.MyClass.ClassVar)</span><br><span class="line">mc.func()</span><br><span class="line">a.fun()</span><br><span class="line"></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">print statement</span></span><br><span class="line"><span class="string">3</span></span><br><span class="line"><span class="string">0.2</span></span><br><span class="line"><span class="string">(3+4j)</span></span><br><span class="line"><span class="string">hello</span></span><br><span class="line"><span class="string">MyClass.func called</span></span><br><span class="line"><span class="string">fun called</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
+<p>可以看出import a 后，a中的所有代码都被执行了一遍，生成了各种对象，执行了所有语句。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># b.py</span></span><br><span class="line"><span class="comment"># 演示在b模块中引入a模块</span></span><br><span class="line"><span class="keyword">from</span> a <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">print(var)</span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    print(_var1)</span><br><span class="line"><span class="keyword">except</span> NameError:</span><br><span class="line">    print(<span class="string">'无法导入变量名以单下划线开头的对象'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    print(__var2)</span><br><span class="line"><span class="keyword">except</span> NameError:</span><br><span class="line">    print(<span class="string">'无法导入变量名以双下划线开头的对象'</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">mc = MyClass()</span><br><span class="line">print(MyClass.ClassVar)</span><br><span class="line">mc.func()</span><br><span class="line">fun()</span><br><span class="line">&apos;&apos;&apos;</span><br><span class="line">print statement</span><br><span class="line">3</span><br><span class="line">无法导入变量名以单下划线开头的对象</span><br><span class="line">无法导入变量名以双下划线开头的对象</span><br><span class="line">hello</span><br><span class="line">MyClass.func called</span><br><span class="line">fun called</span><br><span class="line">&apos;&apos;&apos;</span><br></pre></td></tr></table></figure>
+<p>from … import …这种给导入方式无法导入单下划线开头和双下划线开头的对象</p>
+</li>
+</ul>
+</li>
+<li><p>模块的属性</p>
+<ul>
+<li><p>__name__</p>
+<p>模块或包的名字，例如a.__name__</p>
+<p>这个属性的值在自身模块中是__main__，在别的模块中是模块名本身</p>
+<p>它可以用来区分程序以脚本方式直接执行还是以模块方式被引用执行。</p>
+<p>这也就是代码中常见的 if __name__ ==  ‘__main__’:的原因</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="包-Package"><a href="#包-Package" class="headerlink" title="包 Package"></a>包 Package</h2><ul>
+<li><p>包是由一组模块构成、有层次命名空间的程序功能</p>
+<p>包由多个模块（多个.py文件）有组织的构成</p>
+<p>模块的组织方式构成了命名空间的层次结构</p>
+<p>包是模块的上一级组织概念，其中可以包括子包</p>
+<p>每个包需要包含一个__init__.py文件表达包的组织，这也是与普通包含.py文件目录的区别</p>
+<p>__init__.py可以为空，但必须存在。</p>
+<p>可以简单理解成：包是目录，模块是.py文件</p>
+</li>
+<li><p>不同类型的包创建与使用</p>
+<ul>
+<li><p><strong>常规包</strong> Regular Packages：通过__init__.py文件对文件和目录组织形成的包。目录和文件在文件系统上连续。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">graph TD</span><br><span class="line">a1[包 &lt;br&gt;pkg]</span><br><span class="line">b1[包 &lt;br&gt;pkg1]</span><br><span class="line">b2[包 &lt;br&gt;pkg2]</span><br><span class="line">b3((模块 &lt;br&gt;__init__.py))</span><br><span class="line">c1((模块 &lt;br&gt;m1.py))</span><br><span class="line">c2((模块 &lt;br&gt;m2.py))</span><br><span class="line">c3((模块 &lt;br&gt;__init__.py))</span><br><span class="line">c4((模块 &lt;br&gt;m1.py))</span><br><span class="line">c5((模块 &lt;br&gt;__init__.py))</span><br><span class="line"></span><br><span class="line">a1---b1</span><br><span class="line">a1---b2</span><br><span class="line">a1---b3</span><br><span class="line">b1---c1</span><br><span class="line">b1---c2</span><br><span class="line">b1---c3</span><br><span class="line">b2---c4</span><br><span class="line">b2---c5</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># pkg/__init__.py</span></span><br><span class="line">print(<span class="string">'导入pkg'</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># pkg1/__init__.py</span></span><br><span class="line">print(<span class="string">'导入pkg1'</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># pkg2/__init__.py</span></span><br><span class="line">print(<span class="string">'导入pkg2'</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># pkg.pkg1.m1</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">qqq</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">'pkg.pkg1.m1'</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># pkg.pkg1.m2</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">qqq</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">'pkg.pkg1.m2'</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># pkg.pkg1.m1</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">qqq</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">'pkg.pkg2.m1'</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 与pkg同级 c.py</span></span><br><span class="line"><span class="keyword">import</span> pkg.pkg1.m1</span><br><span class="line"><span class="keyword">import</span> pkg.pkg1.m2</span><br><span class="line"><span class="keyword">import</span> pkg.pkg2.m1</span><br><span class="line"></span><br><span class="line">pkg.pkg1.m1.qqq()</span><br><span class="line">pkg.pkg1.m2.qqq()</span><br><span class="line">pkg.pkg2.m1.qqq()</span><br><span class="line"></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">导入pkg</span></span><br><span class="line"><span class="string">导入pkg1</span></span><br><span class="line"><span class="string">导入pkg2</span></span><br><span class="line"><span class="string">pkg.pkg1.m1</span></span><br><span class="line"><span class="string">pkg.pkg1.m2</span></span><br><span class="line"><span class="string">pkg.pkg2.m1</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
+<p>当包/子包被导入时，对应目录的init文件被执行。</p>
+<p>每个包仅被导入一次，且包导入按照层次结构进行。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pkg.pkg1</span><br><span class="line"></span><br><span class="line">pkg.pkg1.m1.qqq()</span><br><span class="line">pkg.pkg1.m2.qqq()</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">导入pkg</span></span><br><span class="line"><span class="string">导入pkg1</span></span><br><span class="line"><span class="string">Traceback (most recent call last):</span></span><br><span class="line"><span class="string">  File "D:/PycharmProjects/untitled1/a.py", line 3, in &lt;module&gt;</span></span><br><span class="line"><span class="string">    pkg.pkg1.m1.qqq()</span></span><br><span class="line"><span class="string">AttributeError: module 'pkg.pkg1' has no attribute 'm1'</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
+<p>import 到包是不行的，必须import到模块</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pkg.pkg1 <span class="keyword">import</span> m1,m2</span><br><span class="line"></span><br><span class="line">m1.qqq()</span><br><span class="line">m2.qqq()</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">导入pkg</span></span><br><span class="line"><span class="string">导入pkg1</span></span><br><span class="line"><span class="string">pkg.pkg1.m1</span></span><br><span class="line"><span class="string">pkg.pkg1.m2</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
+<p>from … import … 直接导入具体模块，可以简化调用时命名空间表达</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pkg.pkg1 <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">m1.qqq()</span><br><span class="line">m2.qqq()</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">导入pkg</span></span><br><span class="line"><span class="string">导入pkg1</span></span><br><span class="line"><span class="string">Traceback (most recent call last):</span></span><br><span class="line"><span class="string">  File "D:/PycharmProjects/untitled1/a.py", line 3, in &lt;module&gt;</span></span><br><span class="line"><span class="string">    m1.qqq()</span></span><br><span class="line"><span class="string">NameError: name 'm1' is not defined</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
+<p>如果要使用from … import * 这一功能，还需要在被导入的包的init文件中表述当前包中有哪些模块</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># pkg/pkg1/__init__.py</span></span><br><span class="line">__all__ = [<span class="string">'m1'</span>, <span class="string">'m2'</span>]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>命名空间包</strong> Namespace Packages：由更分散子包组成的包，是一种逻辑包。子包可以是文件系统中分散的包，可以是压缩文件，也可以是网络文件或其他系统资源。</p>
+<p>命名空间中各子包并不包含init文件，也就是普通目录。</p>
+<p>python解释器通过sys.path变量来隐式维护命名空间包。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">graph TD</span><br><span class="line">p1[project1]</span><br><span class="line">p2[project2]</span><br><span class="line">p1[project1]</span><br><span class="line"></span><br><span class="line">pkg1[pkg1]</span><br><span class="line">pkg2[pkg2]</span><br><span class="line">pkg3[pkg1]</span><br><span class="line">pkg4[pkg2]</span><br><span class="line"></span><br><span class="line">p1---pkg1</span><br><span class="line">p1---pkg2</span><br><span class="line">p2---pkg3</span><br><span class="line">p2---pkg4</span><br><span class="line"></span><br><span class="line">pkg1---m1((m1.py))</span><br><span class="line">pkg2---m((m1.py))</span><br><span class="line">pkg2---m2((m2.py))</span><br><span class="line">pkg3---m3((m3.py))</span><br><span class="line">pkg4---mm3((m3.py))</span><br><span class="line">pkg4---m4((m4.py))</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># project1/pkg1/m1.py</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">qqq</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">'project1/pkg1/m1'</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># project1/pkg2/m1.py</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">qqq</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">'project1/pkg2/m1'</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># project1/pkg2/m2.py</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">qqq</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">'project1/pkg2/m2'</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># project2/pkg1/m3.py</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">qqq</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">'project2/pkg1/m3'</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># project2/pkg2/m3.py</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">qqq</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">'project2/pkg2/m3'</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># project2/pkg2/m4.py</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">qqq</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">'project2/pkg2/m4'</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># project1,2的同级目录下test.py</span></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line">sys.path += [<span class="string">'project1'</span>, <span class="string">'project2'</span>] <span class="comment"># 指定import搜索模块或包的路径列表，路径是绝对或相对路径。可以通过append或+来手动添加搜索路径</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> pkg1.m1</span><br><span class="line"><span class="keyword">import</span> pkg1.m3</span><br><span class="line"></span><br><span class="line">pkg1.m1.qqq()</span><br><span class="line">pkg1.m3.qqq()</span><br><span class="line"></span><br><span class="line">print(pkg1.__path__)</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">project1/pkg1/m1</span></span><br><span class="line"><span class="string">project2/pkg1/m3</span></span><br><span class="line"><span class="string">_NamespacePath(['project1\\pkg1', 'project2\\pkg1'])</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
+<p>这样就可以把两个pkg1在逻辑上整合起来。</p>
+</li>
+</ul>
+</li>
+<li><p>包的属性</p>
+<ul>
+<li><p>__all__属性</p>
+<p>描述包内所有可以用*导入的模块名称，列表类型</p>
+</li>
+<li><p>__path__属性</p>
+<p>记录了某个包（命名空间）的绝对或相对路径，列表类型</p>
+<p>常规包的路径是单一的，列表中只有一个元素</p>
+<p>命名空间包的路径是多元的，列表中可能有多个元素</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="库-Library"><a href="#库-Library" class="headerlink" title="库 Library"></a>库 Library</h2><ul>
+<li><p>啥是库</p>
+<p>包含一些程序功能，通过import引入使用，对应模块和包。</p>
+<p>特定功能代码封装的集合。</p>
+<p>如time库，爬虫框架scrapy库，web框架Django库，数据分析pandas库等等。</p>
+<p>库是通俗说法，具体指python的模块和包。</p>
+<p>python库的核心是模块及模块的组织方式（体现为命名空间）</p>
+</li>
+<li><p>有哪些库？</p>
+<ul>
+<li><p>标准库（Standard Library）</p>
+<p>python解释器自带，无需安装</p>
+<p>不超过300个，如os,sys,re等库</p>
+<p>功能可靠，整体质量较好，编程常用，总体空间占用不大，由社区贡献并被遴选</p>
+</li>
+<li><p>第三方库（Third-Party Library）</p>
+<p>需要额外安装的python功能库0</p>
+<p>超过14万个，可以由任何人编写贡献，如requests,numpy，scrapy等</p>
+<p>功能多样，良莠不齐，需要由程序员自我甄别，社区仅维护目录</p>
+</li>
+</ul>
+</li>
+<li><p>如何挑选第三方库？</p>
+<ul>
+<li><p>第三方库主站PYPI</p>
+<p><a href="https://pypi.org/" target="_blank" rel="noopener">https://pypi.org/</a></p>
+<p>pypi:Python Package Index</p>
+<p>PSF维护的展示全球python计算生态的主站，仅维护列表</p>
+<p>通过搜索及分类等多种方式检索第三方库</p>
+</li>
+<li><p>结合专家或专业程序员推荐使用</p>
+</li>
+<li><p>参考python123平台的推荐</p>
+</li>
+<li><p>判断第三方库可用性的参考指标</p>
+<ul>
+<li>查看开发历史，近半年有更新记录</li>
+<li>访问项目主页，文档齐全</li>
+<li>评星较高</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>安装第三方库？</p>
+<ul>
+<li><p>pip安装（最常用、最主流）</p>
+<p>pip是python解释器自带的命令行第三方库安装工具</p>
+<p>遇到GFW 使用国内源  pip install packagename -i –tursted-host <a href="http://pypi.douban.com/simple/" target="_blank" rel="noopener">http://pypi.douban.com/simple/</a></p>
+<p>需要联网或给定安装文件</p>
+</li>
+<li><p>UCI安装（pip高级用法）</p>
+<p>某些第三方库在pip下载后，需要windows下编译再安装，本地环境没有编译器时，就    需要到网上下载编译好的版本</p>
+<p>地址：<a href="http://www.lfd.uci.edu/~gohlke/pythonlibs/" target="_blank" rel="noopener">http://www.lfd.uci.edu/~gohlke/pythonlibs/</a></p>
+<p>在UCI页面上搜索对应的第三方库</p>
+<p>下载对应python解释器的编译后版本</p>
+<p>本地安装 pip install 下载文件名</p>
+</li>
+<li><p>自动化pip安装脚本（pip高级用法）</p>
+<p>安装20个指定的第三方库</p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 自动联网 自动安装 简单错误处理</span></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line">libs = [<span class="string">'numpy'</span>, <span class="string">'pillow'</span>, <span class="string">'flask'</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="keyword">for</span> lib <span class="keyword">in</span> libs:</span><br><span class="line">        os.system(<span class="string">'pip install %s'</span>%lib)</span><br><span class="line">    print(<span class="string">'Done'</span>)</span><br><span class="line"><span class="keyword">except</span>:</span><br><span class="line">    print(<span class="string">'error'</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>集成安装</p>
+<p>结合特定python开发工具的批量安装</p>
+<p>anaconda（数据计算领域套件，包含800多个第三方库）</p>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>使用第三方库</p>
+<p>阅读官方文档，查找技术博客、教学视频等等。</p>
+<p>理解设计及应用理念</p>
+<p>实践典型及拓展案例</p>
+</li>
+<li><p>构建并发布第三方库</p>
+<ul>
+<li><p>第三方库的发布概念</p>
+<p>Pypi:Python Package Index,用来登记第三方库信息</p>
+<p>Github bitbucket:用来存储第三方库源代码及文档</p>
+<p>项目project：pypi上一组发布和文件的统称</p>
+<p>发布release：项目的一个特定版本，每个发布有一个确定的版本号</p>
+<p>文件file：即package，一次发布包含的具体文件</p>
+<p>发布工具：</p>
+<ul>
+<li>setuptools：将.py源代码打包成一种分发形式</li>
+<li>twine：将打包好的分发形式提交到pypi上</li>
+<li>wheel</li>
+</ul>
+<p>更新发布工具：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -m pip install --user --upgrade setuptools wheel twine</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>第三方库的发布流程</p>
+<ol>
+<li><p>pypi上注册一个账号</p>
+</li>
+<li><p>整理目录结构</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">D:\MYPROJECT</span><br><span class="line">└─mpj</span><br><span class="line">       xxx.py</span><br><span class="line">       __init__.py</span><br></pre></td></tr></table></figure>
+<p>MYPROJECT：最顶层目录，相当于当前项目，所有setuptools命令在这个目录中执行</p>
+<p>mpj 0.0.1：包目录，分发的主体，所有源代码及层次化命名空间放这里</p>
+</li>
+<li><p>创建其他相关文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">D:\MYPROJECT</span><br><span class="line">│  LICENSE</span><br><span class="line">│  README.md</span><br><span class="line">│  setup.py</span><br><span class="line">│</span><br><span class="line">└─mpj</span><br><span class="line">        xxx.py</span><br><span class="line">        __init__.py</span><br></pre></td></tr></table></figure>
+<p>setup.py：配置发布信息的文件</p>
+<p>README.md：markdown格式的自述文件</p>
+<p>LICENSE：版权声明文件</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># setup.py</span></span><br><span class="line"><span class="keyword">import</span> setuptools</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> open(<span class="string">"README.md"</span>, <span class="string">"r"</span>) <span class="keyword">as</span> fh:</span><br><span class="line">	long_description = fh.read()</span><br><span class="line"></span><br><span class="line">setuptools.setup(</span><br><span class="line">	name=<span class="string">"mpj"</span>,</span><br><span class="line">	version=<span class="string">"0.0.2"</span>,</span><br><span class="line">	author=<span class="string">"xxx"</span>,</span><br><span class="line">	author_email=<span class="string">"xxx@xxx.xxx"</span>,</span><br><span class="line">	description=<span class="string">"xxx"</span>,</span><br><span class="line">	long_description=long_description,</span><br><span class="line">	long_description_content_type=<span class="string">"text/markdown"</span>,</span><br><span class="line">	url=<span class="string">"https://github.com/xxx"</span>,</span><br><span class="line">	packages=setuptools.find_packages(),</span><br><span class="line">	classifiers=[</span><br><span class="line">        <span class="string">"Programming Language :: Python :: 3"</span>,</span><br><span class="line">        <span class="string">"License :: OSI Approved :: MIT License"</span>,</span><br><span class="line">        <span class="string">"Operating System :: OS Independent"</span>,</span><br><span class="line">    ],</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>执行打包命令</p>
+<p>在项目目录下执行：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python setup.py sdist bdist_wheel</span><br></pre></td></tr></table></figure>
+<p>其中sdist参数表示源代码发布，生成.tar.gz文件。对于纯python编写的库，源发布有最佳的适用性。</p>
+<p>bdist_wheel表示编译后可执行程序发布，生成whl文件。对于各类多语言的扩展库，节省了本机编译需求，适用性较好。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">D:\MYPROJECT</span><br><span class="line">│  LICENSE</span><br><span class="line">│  README.md</span><br><span class="line">│  setup.py</span><br><span class="line">│</span><br><span class="line">├─build</span><br><span class="line">│  ├─bdist.win-amd64</span><br><span class="line">│  └─lib</span><br><span class="line">│      └─mpj</span><br><span class="line">│              xxx.py</span><br><span class="line">│              __init__.py</span><br><span class="line">│</span><br><span class="line">├─dist</span><br><span class="line">│      mpj-0.0.2-py3-none-any.whl</span><br><span class="line">│      mpj-0.0.2.tar.gz</span><br><span class="line">│</span><br><span class="line">├─mpj</span><br><span class="line">│      xxx.py</span><br><span class="line">│      __init__.py</span><br><span class="line">│</span><br><span class="line">└─mpj.egg-info</span><br><span class="line">        dependency_links.txt</span><br><span class="line">        PKG-INFO</span><br><span class="line">        SOURCES.txt</span><br><span class="line">        top_level.txt</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>执行发布命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">twine upload dist/*</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+            <a href="/tags/第三方库/" rel="tag"># 第三方库</a>
+          
+            <a href="/tags/模块/" rel="tag"># 模块</a>
+          
+            <a href="/tags/库/" rel="tag"># 库</a>
+          
+            <a href="/tags/包/" rel="tag"># 包</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/11/15/[python]5.分支&循环&条件判断及组合/" rel="next" title="python分支&循环&条件判断及组合">
+                <i class="fa fa-chevron-left"></i> python分支&循环&条件判断及组合
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/11/27/[python]51.import系统/" rel="prev" title="import详解">
+                import详解 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">萧遥</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">74</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">10</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">128</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/xiaoyao1949" title="GitHub &rarr; https://github.com/xiaoyao1949" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:xiaoyao1949@outlook.com" title="E-Mail &rarr; mailto:xiaoyao1949@outlook.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#模块-Module"><span class="nav-number">1.</span> <span class="nav-text">模块 Module</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#包-Package"><span class="nav-number">2.</span> <span class="nav-text">包 Package</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#库-Library"><span class="nav-number">3.</span> <span class="nav-text">库 Library</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">萧遥</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.1"></script>
+
+  <script src="/js/src/motion.js?v=7.0.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/schemes/muse.js?v=7.0.1"></script>
+
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.1"></script>
+<script src="/js/src/post-details.js?v=7.0.1"></script>
+
+
+
+  
+
+
+  <script src="/js/src/next-boot.js?v=7.0.1"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+
+  
+<script>
+if ($('body').find('pre.mermaid').length) {
+  $.ajax({
+    type: 'GET',
+    url: '//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js',
+    dataType: 'script',
+    cache: true,
+    success: function() {
+      mermaid.initialize({
+        theme: 'default',
+        logLevel: 3,
+        flowchart: { curve: 'linear' },
+        gantt: { axisFormat: '%m/%d/%Y' },
+        sequence: { actorMargin: 50 }
+      });
+    }
+  });
+}
+</script>
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+<style>
+  .copy-btn {
+    display: inline-block;
+    padding: 6px 12px;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 20px;
+    color: #333;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    
+      background-color: #fff;
+      border: none;
+    
+    user-select: none;
+    outline: 0;
+  }
+
+  .highlight-wrap .copy-btn {
+    transition: opacity .3s ease-in-out;
+    opacity: 0;
+    padding: 2px 6px;
+    position: absolute;
+    
+      right: 0px;
+      height: 42px;
+    
+  }
+
+  .highlight-wrap:hover .copy-btn,
+  .highlight-wrap .copy-btn:focus {
+    opacity: 1;
+  }
+
+  .highlight-wrap {
+    position: relative;
+  }
+</style>
+<script>
+  $('.highlight').each(function(i, e) {
+    var $wrap = $('<div>').addClass('highlight-wrap');
+    $(e).after($wrap);
+    $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function(e) {
+      var code = $(this).parent().find('.code').find('.line').map(function(i, e) {
+        return $(e).text();
+      }).toArray().join('\n');
+      var ta = document.createElement('textarea');
+      var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+      ta.style.top = yPosition + 'px'; // Prevent page scroll
+      ta.style.position = 'absolute';
+      ta.style.opacity = '0';
+      ta.readOnly = true;
+      ta.value = code;
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0, code.length);
+      ta.readOnly = false;
+      var result = document.execCommand('copy');
+      
+        if (result) $(this).text('复制成功');
+        else $(this).text('复制失败');
+      
+      ta.blur(); // For iOS
+      $(this).blur();
+    })).on('mouseleave', function(e) {
+      var $b = $(this).find('.copy-btn');
+      setTimeout(function() {
+        $b.text('复制');
+      }, 300);
+    }).append(e);
+  })
+</script>
+
+
+</body>
+</html>

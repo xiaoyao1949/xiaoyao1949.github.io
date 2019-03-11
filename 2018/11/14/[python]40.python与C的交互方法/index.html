@@ -1,0 +1,1438 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '7.0.1',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="整合python高产与C/C++高效的优势利用C或Python已有功能服务彼此python作为胶水语言整合或者被整合到各类独立程序">
+<meta name="keywords" content="python,c&#x2F;c++,扩展,嵌入,调用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python与C&#x2F;C++语言的交互">
+<meta property="og:url" content="http://yoursite.com/2018/11/14/[python]40.python与C的交互方法/index.html">
+<meta property="og:site_name" content="一个代码手艺人的技术博客">
+<meta property="og:description" content="整合python高产与C/C++高效的优势利用C或Python已有功能服务彼此python作为胶水语言整合或者被整合到各类独立程序">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-03-11T13:38:58.469Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="python与C&#x2F;C++语言的交互">
+<meta name="twitter:description" content="整合python高产与C/C++高效的优势利用C或Python已有功能服务彼此python作为胶水语言整合或者被整合到各类独立程序">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/11/14/[python]40.python与C的交互方法/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>python与C/C++语言的交互 | 一个代码手艺人的技术博客</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">一个代码手艺人的技术博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">为学日益</h1>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/14/[python]40.python与C的交互方法/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="萧遥">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一个代码手艺人的技术博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">python与C/C++语言的交互
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-11-14 08:54:21" itemprop="dateCreated datePublished" datetime="2018-11-14T08:54:21+08:00">2018-11-14</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-03-11 21:38:58" itemprop="dateModified" datetime="2019-03-11T21:38:58+08:00">2019-03-11</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/python基础/" itemprop="url" rel="index"><span itemprop="name">python基础</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>整合python高产与C/C++高效的优势<br>利用C或Python已有功能服务彼此<br>python作为胶水语言整合或者被整合到各类独立程序<br><a id="more"></a></p>
+<h2 id="扩展：python中调用C-C-编写的库"><a href="#扩展：python中调用C-C-编写的库" class="headerlink" title="扩展：python中调用C/C++编写的库"></a>扩展：python中调用C/C++编写的库</h2><p>提升关键代码性能</p>
+<p>引入C语言成熟功能库</p>
+<p>以python为主程序，C通过.dll/.so形式使用</p>
+<p>方式：</p>
+<ul>
+<li><p>ctypes</p>
+<p>调用DLL或共享库的python功能函数库，标准库API</p>
+<p><a href="https://docs.python.org/3.7/library/ctypes.html" target="_blank" rel="noopener">https://docs.python.org/3.7/library/ctypes.html</a></p>
+<p>通过一个python标准库实现python扩展</p>
+<p>C语言功能编成.dll或.so库，加载库及调用函数，API</p>
+<p>C语言独立编程，python使用库调用接口函数</p>
+</li>
+</ul>
+<ul>
+<li><p>CFFI (C Foreign Function Interface for Python)</p>
+<p>在python中直接使用C函数的方式</p>
+<p>第三方库   pip install cffi</p>
+<p><a href="https://cffi.readthedocs.io/en/latest/" target="_blank" rel="noopener">https://cffi.readthedocs.io/en/latest/</a></p>
+<p>思路类似ctypes，使用API扩展C程序，也可以直接混合编程</p>
+<p>关注C函数的访问接口，而不是库函数，构建API</p>
+<p>C语言独立编程，python用CFFI扩展，学习成本低。</p>
+<ul>
+<li>功能接口</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>与C语言数据类型相关的接口</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ffi.NULL</td>
+<td>相当于常量值NULL</td>
+</tr>
+<tr>
+<td>ffi.new(cdecl)</td>
+<td>数组或指针的生成，new(‘x*’)或new(‘x[n]’)</td>
+</tr>
+<tr>
+<td>ffi.cast(ctype, value)</td>
+<td>C数据类型的声明，ctype是类型名，value是变量名   cast(‘int’, x)</td>
+</tr>
+<tr>
+<td>ffi.string(cdata)</td>
+<td>从cdata类型中返回一个Python字符串</td>
+</tr>
+<tr>
+<td>ffi.unpack(cdata, length)</td>
+<td>从cdata数组中获取特定长度，返回一个Python字符串或列表</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>与数据大小相关的接口</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ffi.typeof(ctype)</td>
+<td>返回ctype的长度</td>
+</tr>
+<tr>
+<td>ffi.sizeof(object)</td>
+<td>返回object对象的长度</td>
+</tr>
+<tr>
+<td>ffi.alignof(ctype)</td>
+<td>返回ctype或对象的长度</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>与调用相关的接口</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ffi.dlopen(libpath)</td>
+<td>打开动态链接库并建立一个句柄</td>
+</tr>
+<tr>
+<td>ffi.dlclose(lib)</td>
+<td>关闭动态链接库并释放句柄</td>
+</tr>
+<tr>
+<td>ffi.cdef(str)</td>
+<td>str指明Python中需要使用的C类型、函数等声明</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>与内存操作相关的接口</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ffi.memmove(dst, src, n)</td>
+<td>从src向dst拷贝n直接内容，src和dst都是python变量</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><p>简单应用</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 可编译为.dll的C语言代码  mxmul.h */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> _DLL_H_</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _DLL_H_</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">if</span> BUILDING_DLL</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> DLLIMPORT __declspec(dllexport)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">else</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> DLLIMPORT __declspec(dllimport)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"></span><br><span class="line"><span class="function">DLLIMPORT <span class="keyword">int</span> *<span class="title">mxmul</span><span class="params">(<span class="keyword">int</span> nrow, <span class="keyword">int</span> nk, <span class="keyword">int</span> ncol, <span class="keyword">int</span> mx1[][nk], <span class="keyword">int</span> mx2[][ncol])</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 可编译为.dll的C语言代码  mxmul.c */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">"mxmul.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;windows.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* Parameters: nrow, nk, ncol, mx1, mx2 */</span></span><br><span class="line"><span class="function">DLLIMPORT <span class="keyword">int</span> *<span class="title">mxmul</span><span class="params">(<span class="keyword">int</span> nrow, <span class="keyword">int</span> nk, <span class="keyword">int</span> ncol, <span class="keyword">int</span> mx1[][nk], <span class="keyword">int</span> mx2[][ncol])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> x, i, j;</span><br><span class="line">    <span class="keyword">int</span> *rst;</span><br><span class="line">    rst = <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">int</span>) * nrow * ncol);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; nrow; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span>(j = <span class="number">0</span>; j &lt; ncol; j++)</span><br><span class="line">        &#123;</span><br><span class="line">            rst[i*ncol +j] =<span class="number">0</span>;</span><br><span class="line">            <span class="keyword">for</span>(x = <span class="number">0</span>; x &lt; nk; x++)</span><br><span class="line">            &#123;</span><br><span class="line">                rest[i*ncol +j] +=*(*(mx1+i)+x) * *(*(mx2+x)+j);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> rst;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">BOOL WINAPI <span class="title">DllMain</span><span class="params">(HINSTANCE hinstDLL,DWORD fdwReason,LPVOID lpvReserved)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">switch</span>(fdwReason)</span><br><span class="line">	&#123;</span><br><span class="line">        <span class="keyword">case</span> DLL_PROCESS_ATTACH:</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">case</span> DLL_PROCESS_DETACH:</span><br><span class="line">        &#123;</span><br><span class="line">        	<span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">		<span class="keyword">case</span> DLL_THREAD_ATTACH:</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">case</span> DLL_THREAD_DETACH:</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>mxmul.c和mxmul.h 编译后可以得到mxmul.dll和mxmul32.dll</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 用来封装.dll的python模块  cmxmul.py</span></span><br><span class="line"><span class="keyword">import</span> array</span><br><span class="line"><span class="keyword">from</span> cffi <span class="keyword">import</span> FFI</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">cmxmul</span><span class="params">(nrow, nk, ncol, mx1, mx2)</span>:</span></span><br><span class="line">    ffi = FFI()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 基本类型参数关联</span></span><br><span class="line">    c_nrow = ffi.cast(<span class="string">'int'</span>, nrow)</span><br><span class="line">    c_nk = ffi.cast(<span class="string">'int'</span>, nk)</span><br><span class="line">    c_ncol = ffi.cast(<span class="string">'int'</span>, ncol)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 列表类型参数关联</span></span><br><span class="line">    _mx1 = array.array(<span class="string">'l'</span>)</span><br><span class="line">	_mx2 = array.array(<span class="string">'l'</span>)</span><br><span class="line">	[_mx1.fromlist(x) <span class="keyword">for</span> x <span class="keyword">in</span> mx1 ]</span><br><span class="line">	[_mx2.fromlist(x) <span class="keyword">for</span> x <span class="keyword">in</span> mx2 ]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 数据的内存拷贝</span></span><br><span class="line">    c_mx1 = ffi.new(<span class="string">'int[]'</span>, len(_mx1))</span><br><span class="line">	c_mx2 = ffi.new(<span class="string">'int[]'</span>, len(_mx2))</span><br><span class="line">	ffi.memmove(c_mx1, _mx1, ffi.sizeof(c_mx1))</span><br><span class="line">	ffi.memmove(c_mx2, _mx2, ffi.sizeof(c_mx2))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 声明函数</span></span><br><span class="line">    ffi.cdef(<span class="string">'''</span></span><br><span class="line"><span class="string">		int *mxmul(int nrow, int nk, int ncol, int *mx1, int *mx2);</span></span><br><span class="line"><span class="string">		'''</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 调用dll库</span></span><br><span class="line">	<span class="keyword">try</span> :</span><br><span class="line">        <span class="comment"># 64位计算机加载mxmul.dll</span></span><br><span class="line">		C = ffi.dlopen(<span class="string">'mxmul.dll'</span>)</span><br><span class="line">	<span class="keyword">except</span> :</span><br><span class="line">        <span class="comment"># 32位计算机加载mxmul32.dll</span></span><br><span class="line">		C = ffi.dlopen(<span class="string">'mxmul32.dll'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 调用动态链接库中的函数</span></span><br><span class="line">    c_res = C.mxmul(c_nrow, c_nk, c_ncol, c_mx1, c_mx2)</span><br><span class="line"></span><br><span class="line">    <span class="comment">#解包返回</span></span><br><span class="line">    <span class="keyword">return</span> ffi.unpack(c_res, nrow * ncol</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 用来测试效果的python程序    test.py</span></span><br><span class="line"><span class="keyword">from</span> cmxmul <span class="keyword">import</span> cmxmul</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    <span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line">    nrow, nk, ncol = <span class="number">500</span>, <span class="number">300</span>, <span class="number">500</span></span><br><span class="line">    mx1 = [[i <span class="keyword">for</span> i <span class="keyword">in</span> range(nk)] <span class="keyword">for</span> j <span class="keyword">in</span> range(nrow)]</span><br><span class="line">    mx2 = [[i <span class="keyword">for</span> i <span class="keyword">in</span> range(ncol)] <span class="keyword">for</span> j <span class="keyword">in</span> range(nk)]</span><br><span class="line">    start = time.perf_counter()</span><br><span class="line">    rst = cmxmul(nrow, nk, ncol, mx1, mx2)</span><br><span class="line">    end = time.perf_counter()</span><br><span class="line">    print(<span class="string">'运行时间：%.4f秒'</span> % (end - start))</span><br><span class="line"></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">运行时间：0.3135秒</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li><p>Cython</p>
+<p>实现python扩展的一种语言，第三方库。</p>
+<p><a href="https://cython.org/" target="_blank" rel="noopener">https://cython.org/</a></p>
+<p>通过一种简单的语言来实现python和C的接口</p>
+<p>采用了Pyrex语法形式</p>
+<p>采用C数据类型的python编程，实现混合编程</p>
+</li>
+<li><p>SWIG</p>
+<p>一个将C/C++与脚本语言相整合的编译器，独立工具</p>
+<p><a href="http://www.swig.org/" target="_blank" rel="noopener">http://www.swig.org/</a></p>
+<p>通过一个编译器来实现python和C的接口</p>
+<p>纯C/C++编程，通过编写接口变成python模块</p>
+<p>独立C和python编程，重点在于编写接口（描述）</p>
+</li>
+</ul>
+<h2 id="调用：python和C间以进程级别相互调用"><a href="#调用：python和C间以进程级别相互调用" class="headerlink" title="调用：python和C间以进程级别相互调用"></a>调用：python和C间以进程级别相互调用</h2><p>模块间功能互用</p>
+<p>以功能使用为目标</p>
+<p>C/C++和python都是独立程序</p>
+<p>方式：子进程或线程方式</p>
+<ul>
+<li><p>Python 中调用C语言程序</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 待调用的c程序源码 */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> **argv)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> a;</span><br><span class="line">    a = atoi(argv[<span class="number">1</span>]);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"input x:%d\n"</span>, a);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"pow(x):%d\n"</span>, a*a);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//编译成pow.exe</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># xxx.py</span></span><br><span class="line"><span class="keyword">import</span> subprocess</span><br><span class="line">subprocess.run([<span class="string">"pow.exe"</span>, <span class="string">"9"</span>])</span><br><span class="line"><span class="string">'''执行后的结果</span></span><br><span class="line"><span class="string">input x:9</span></span><br><span class="line"><span class="string">pow(x):81</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
+<p>subprocess.run()的参数可以是一个字符串或一个列表</p>
+<p>如果是字符串，就是程序的名称</p>
+<p>如果是列表，是程序名称和参数组成的列表</p>
+</li>
+<li><p>C语言中调用python程序</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># pow.py</span></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line">print(<span class="string">"input x:%d"</span>%sys.argv[<span class="number">1</span>])</span><br><span class="line">print(<span class="string">"pow(x):%d"</span>%pow(int(sys.argv[<span class="number">1</span>]),<span class="number">2</span>))</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* test.c */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    system(<span class="string">"python pow.py 9"</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//编译后运行</span></span><br></pre></td></tr></table></figure>
+<p>system(char *cmd) 是C/C++下的标准函数，C89定义。将指令和参数以字符指针形式作为参数传递执行程序。</p>
+</li>
+</ul>
+<h2 id="嵌入：C-C-中调用python程序"><a href="#嵌入：C-C-中调用python程序" class="headerlink" title="嵌入：C/C++中调用python程序"></a>嵌入：C/C++中调用python程序</h2><p>利用python高产</p>
+<p>引入python成熟功能库</p>
+<p>以C/C++为主程序，python通过源文件形式使用</p>
+<p>方式：python/c API     <a href="https://docs.python.org/3/c-api/" target="_blank" rel="noopener">https://docs.python.org/3/c-api/</a></p>
+<ul>
+<li>嵌入python语句：嵌入一个或多个python语句</li>
+<li>嵌入python脚本：嵌入一个或多个python文件</li>
+<li>python/C API　需要加载python解释器以及加载python语句和脚本</li>
+</ul>
+<p>头文件：python.h</p>
+<p>函数：加载python解释器、嵌入python语句及脚本、数据类型转换等。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;Python.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	Py_Initialize();</span><br><span class="line">	PyRun_SimpleString(<span class="string">"print(eval('1 + 2'))"</span>);</span><br><span class="line">	Py_Finalize();</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Py_Initialize()</td>
+<td>初始化Python解释器，加载builtins、__main__、sys等</td>
+</tr>
+<tr>
+<td>Py_Finalize()</td>
+<td>终结化python解释器，释放解释器占用的内存</td>
+</tr>
+<tr>
+<td>PyRun_SimpleString(const char* cmd)</td>
+<td>在__main__模块中执行一句语句   如果main不存在则创建</td>
+</tr>
+<tr>
+<td>PyRun_SimpleFile(FILE <em>fp, const char </em>fname)</td>
+<td>在C中调用一个Python文件</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># <span class="meta-keyword">include</span><span class="meta-string">&lt;Python.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">char</span> fname[] = <span class="string">"mxmul.py"</span>;</span><br><span class="line">    FILE *fp = fopen(fname, <span class="string">'r'</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (fp == <span class="literal">NULL</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"fopen error"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    Py_Initialize();</span><br><span class="line">    PyRun_SimpleFile(fp, fname);</span><br><span class="line">    Py_Finalize();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+            <a href="/tags/c-c/" rel="tag"># c/c++</a>
+          
+            <a href="/tags/扩展/" rel="tag"># 扩展</a>
+          
+            <a href="/tags/嵌入/" rel="tag"># 嵌入</a>
+          
+            <a href="/tags/调用/" rel="tag"># 调用</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/11/13/[python]4.赋值语句/" rel="next" title="python赋值语句">
+                <i class="fa fa-chevron-left"></i> python赋值语句
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/11/15/[python]5.分支&循环&条件判断及组合/" rel="prev" title="python分支&循环&条件判断及组合">
+                python分支&循环&条件判断及组合 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">萧遥</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">74</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">10</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">128</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/xiaoyao1949" title="GitHub &rarr; https://github.com/xiaoyao1949" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:xiaoyao1949@outlook.com" title="E-Mail &rarr; mailto:xiaoyao1949@outlook.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#扩展：python中调用C-C-编写的库"><span class="nav-number">1.</span> <span class="nav-text">扩展：python中调用C/C++编写的库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#调用：python和C间以进程级别相互调用"><span class="nav-number">2.</span> <span class="nav-text">调用：python和C间以进程级别相互调用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#嵌入：C-C-中调用python程序"><span class="nav-number">3.</span> <span class="nav-text">嵌入：C/C++中调用python程序</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">萧遥</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.1"></script>
+
+  <script src="/js/src/motion.js?v=7.0.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/schemes/muse.js?v=7.0.1"></script>
+
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.1"></script>
+<script src="/js/src/post-details.js?v=7.0.1"></script>
+
+
+
+  
+
+
+  <script src="/js/src/next-boot.js?v=7.0.1"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+
+  
+<script>
+if ($('body').find('pre.mermaid').length) {
+  $.ajax({
+    type: 'GET',
+    url: '//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js',
+    dataType: 'script',
+    cache: true,
+    success: function() {
+      mermaid.initialize({
+        theme: 'default',
+        logLevel: 3,
+        flowchart: { curve: 'linear' },
+        gantt: { axisFormat: '%m/%d/%Y' },
+        sequence: { actorMargin: 50 }
+      });
+    }
+  });
+}
+</script>
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+<style>
+  .copy-btn {
+    display: inline-block;
+    padding: 6px 12px;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 20px;
+    color: #333;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    
+      background-color: #fff;
+      border: none;
+    
+    user-select: none;
+    outline: 0;
+  }
+
+  .highlight-wrap .copy-btn {
+    transition: opacity .3s ease-in-out;
+    opacity: 0;
+    padding: 2px 6px;
+    position: absolute;
+    
+      right: 0px;
+      height: 42px;
+    
+  }
+
+  .highlight-wrap:hover .copy-btn,
+  .highlight-wrap .copy-btn:focus {
+    opacity: 1;
+  }
+
+  .highlight-wrap {
+    position: relative;
+  }
+</style>
+<script>
+  $('.highlight').each(function(i, e) {
+    var $wrap = $('<div>').addClass('highlight-wrap');
+    $(e).after($wrap);
+    $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function(e) {
+      var code = $(this).parent().find('.code').find('.line').map(function(i, e) {
+        return $(e).text();
+      }).toArray().join('\n');
+      var ta = document.createElement('textarea');
+      var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+      ta.style.top = yPosition + 'px'; // Prevent page scroll
+      ta.style.position = 'absolute';
+      ta.style.opacity = '0';
+      ta.readOnly = true;
+      ta.value = code;
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0, code.length);
+      ta.readOnly = false;
+      var result = document.execCommand('copy');
+      
+        if (result) $(this).text('复制成功');
+        else $(this).text('复制失败');
+      
+      ta.blur(); // For iOS
+      $(this).blur();
+    })).on('mouseleave', function(e) {
+      var $b = $(this).find('.copy-btn');
+      setTimeout(function() {
+        $b.text('复制');
+      }, 300);
+    }).append(e);
+  })
+</script>
+
+
+</body>
+</html>
