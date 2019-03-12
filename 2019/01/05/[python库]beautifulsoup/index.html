@@ -1,0 +1,1379 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '7.0.1',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="html和xml解析">
+<meta name="keywords" content="python,爬虫,数据解析">
+<meta property="og:type" content="article">
+<meta property="og:title" content="beautifulsoup">
+<meta property="og:url" content="http://yoursite.com/2019/01/05/[python库]beautifulsoup/index.html">
+<meta property="og:site_name" content="一个代码手艺人的技术博客">
+<meta property="og:description" content="html和xml解析">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-03-11T16:04:51.420Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="beautifulsoup">
+<meta name="twitter:description" content="html和xml解析">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/01/05/[python库]beautifulsoup/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>beautifulsoup | 一个代码手艺人的技术博客</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">一个代码手艺人的技术博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">为学日益</h1>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/05/[python库]beautifulsoup/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="萧遥">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一个代码手艺人的技术博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">beautifulsoup
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-01-05 12:23:03" itemprop="dateCreated datePublished" datetime="2019-01-05T12:23:03+08:00">2019-01-05</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-03-12 00:04:51" itemprop="dateModified" datetime="2019-03-12T00:04:51+08:00">2019-03-12</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/python库/" itemprop="url" rel="index"><span itemprop="name">python库</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>html和xml解析<br><a id="more"></a></p>
+<ul>
+<li><p>第三方库</p>
+<p><a href="https://www.crummy.com/software/BeautifulSoup/" target="_blank" rel="noopener">https://www.crummy.com/software/BeautifulSoup/</a></p>
+<p>pip install beautifulsoup4</p>
+</li>
+<li><p>简单示例</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">html =<span class="string">'''&lt;html&gt;</span></span><br><span class="line"><span class="string">&lt;head&gt;&lt;title&gt;我的第一个 HTML 页面&lt;/title&gt;&lt;/head&gt;</span></span><br><span class="line"><span class="string">&lt;body&gt;</span></span><br><span class="line"><span class="string">&lt;p&gt;body 元素的内容会显示在浏览器中。&lt;/p&gt;</span></span><br><span class="line"><span class="string">&lt;p class="note"&gt;title 元素的内容会显示在浏览器的标题栏中。&lt;/p&gt;</span></span><br><span class="line"><span class="string">&lt;/body&gt;&lt;/html&gt;'''</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line">soup = BeautifulSoup(html, <span class="string">'html.parser'</span>)</span><br><span class="line">print(soup.prettify())</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="Beautiful-Soup库解析器"><a href="#Beautiful-Soup库解析器" class="headerlink" title="Beautiful Soup库解析器"></a>Beautiful Soup库解析器</h2><table>
+<thead>
+<tr>
+<th>解析器</th>
+<th>使用方法</th>
+<th>条件</th>
+<th>优势</th>
+<th>劣势</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>bs4的HTML解析器</td>
+<td>BeautifulSoup(mk,’html.parser’)</td>
+<td>安装bs4库</td>
+<td>python内置标准库，执行速度适中，文档容错能力强</td>
+<td>py2.7.3 和py3.2.2前的版主中文容错能力差</td>
+</tr>
+<tr>
+<td>lxml的HTML解析器</td>
+<td>BeautifulSoup(mk, ‘lxml’)</td>
+<td>pip install lxml</td>
+<td>速度快，文档容错能力强</td>
+<td>需要安装C语言库</td>
+</tr>
+<tr>
+<td>lxml的xml解析器</td>
+<td>BeautifulSoup(mk,’xml’)</td>
+<td>pip install lxml</td>
+<td>速度快，唯一支持xml的解析库</td>
+<td>需要安装C语言库</td>
+</tr>
+<tr>
+<td>html5lib的解析器</td>
+<td>BeautifulSoup(mk, ‘html5lib’)</td>
+<td>pip install html5lib</td>
+<td>容错性最好，以浏览器的方式解析文档，生成HTML5格式的文档，不依赖外部扩展</td>
+<td>速度慢</td>
+</tr>
+</tbody>
+</table>
+<h2 id="BeautifulSoup类的基本元素"><a href="#BeautifulSoup类的基本元素" class="headerlink" title="BeautifulSoup类的基本元素"></a>BeautifulSoup类的基本元素</h2><table>
+<thead>
+<tr>
+<th>基本元素</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tag</td>
+<td>标签，最基本的信息组织单元，分别用&lt;&gt;和&lt;/&gt;标明开始和结束</td>
+</tr>
+<tr>
+<td>Name</td>
+<td>标签的名字，\<p>\</p>的名字是p，格式：\<tag>.name</tag></td>
+</tr>
+<tr>
+<td>Attributes</td>
+<td>标签的属性，字典形式组织，格式：\<tag>.attrs</tag></td>
+</tr>
+<tr>
+<td>NavigableString</td>
+<td>标签内非属性字符串，&lt;&gt;…&lt;/&gt;中字符串，格式：\<tag>.string</tag></td>
+</tr>
+<tr>
+<td>Comment</td>
+<td>标签内字符串的注释部分，一种特殊的Comment类型</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 简单例子</span></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line"></span><br><span class="line">url = <span class="string">'https://www.crummy.com/software/BeautifulSoup/'</span></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    r = requests.get(url)</span><br><span class="line">    r.raise_for_status()</span><br><span class="line"><span class="keyword">except</span>:</span><br><span class="line">    print(<span class="string">'网络资源错误'</span>)</span><br><span class="line"></span><br><span class="line">soup = BeautifulSoup(r.text, <span class="string">'html.parser'</span>)</span><br><span class="line">print(soup.title)</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">&lt;title&gt;Beautiful Soup: We called him Tortoise because he taught us.&lt;/title&gt;</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line">print(soup.a, type(soup.a)) <span class="comment"># 多个tag名相同时，获取第一个</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">&lt;a href="bs4/download/"&gt;&lt;h1&gt;Beautiful Soup&lt;/h1&gt;&lt;/a&gt; &lt;class 'bs4.element.Tag'&gt;</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line">print(soup.a.name)</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">a</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line">print(soup.a.attrs)</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">&#123;'href': 'bs4/download/'&#125;</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line">print(soup.a.attrs[<span class="string">'href'</span>])</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">bs4/download/</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line">print(soup.a.string)</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">Beautiful Soup</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"></span><br><span class="line">newsoup = BeautifulSoup(<span class="string">'&lt;b&gt;&lt;!--This is a comment--&gt;&lt;/b&gt;&lt;p&gt;This is not a comment&lt;/p&gt;'</span>, <span class="string">'html.parser'</span>)</span><br><span class="line">print(newsoup.b.string, type(newsoup.b.string))</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">This is a comment &lt;class 'bs4.element.Comment'&gt;</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"></span><br><span class="line">print(newsoup.p.string, type(newsoup.p.string))</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">This is not a comment &lt;class 'bs4.element.NavigableString'&gt;</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
+<h2 id="遍历DOM树"><a href="#遍历DOM树" class="headerlink" title="遍历DOM树"></a>遍历DOM树</h2><ul>
+<li><p>下行遍历：根到叶</p>
+<p>| 属性        | 说明                                                   |<br>| ———– | —————————————————— |<br>| .contents   | 子节点列表，将tag所有儿子节点存入列表                  |<br>| .children   | 子节点的迭代类型，与.cntents类似，用于循环遍历儿子节点 |<br>| .descndants | 子孙节点的迭代类型，包含所有子孙节点，用于循环遍历     |</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 简单例子</span></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line"></span><br><span class="line">url = <span class="string">'https://www.crummy.com/software/BeautifulSoup/'</span></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    r = requests.get(url)</span><br><span class="line">    r.raise_for_status()</span><br><span class="line"><span class="keyword">except</span>:</span><br><span class="line">    print(<span class="string">'网络资源错误'</span>)</span><br><span class="line"></span><br><span class="line">soup = BeautifulSoup(r.text, <span class="string">'html.parser'</span>)</span><br><span class="line"></span><br><span class="line">head = soup.head</span><br><span class="line">print(head.contents)</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">['\n', &lt;meta content="text/html; charset=utf-8" http-equiv="Content-Type"/&gt;, '\n', &lt;title&gt;Beautiful Soup: We called him Tortoise because he taught us.&lt;/title&gt;, '\n', &lt;link href="mailto:leonardr@segfault.org" rev="made"/&gt;, '\n', &lt;link href="/nb/themes/Default/nb.css" rel="stylesheet" type="text/css"/&gt;, '\n', &lt;meta content="Beautiful Soup: a library designed for screen-scraping HTML and XML." name="Description"/&gt;, '\n', &lt;meta content="Markov Approximation 1.4 (module: leonardr)" name="generator"/&gt;, '\n', &lt;meta content="Leonard Richardson" name="author"/&gt;, '\n']</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line">print(head.contents[<span class="number">3</span>])</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">&lt;title&gt;Beautiful Soup: We called him Tortoise because he taught us.&lt;/title&gt;</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 某标签的下行遍历</span></span><br><span class="line"><span class="keyword">for</span> child <span class="keyword">in</span> soup.tag.children:</span><br><span class="line">    print(child.name)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>上行遍历：叶到根</p>
+<p>| 属性     | 说明                                           |<br>| ——– | ———————————————- |<br>| .parent  | 节点的父亲标签                                 |<br>| .parents | 节点的先辈标签的迭代类型，用于循环遍历先辈节点 |</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 属性示例</span></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line"></span><br><span class="line">url = <span class="string">'https://www.crummy.com/software/BeautifulSoup/'</span></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    r = requests.get(url)</span><br><span class="line">    r.raise_for_status()</span><br><span class="line"><span class="keyword">except</span>:</span><br><span class="line">    print(<span class="string">'网络资源错误'</span>)</span><br><span class="line"></span><br><span class="line">soup = BeautifulSoup(r.text, <span class="string">'html.parser'</span>)</span><br><span class="line">print(soup.a.parent)</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">&lt;div align="center"&gt;</span></span><br><span class="line"><span class="string">&lt;a href="bs4/download/"&gt;&lt;h1&gt;...&lt;/h1&gt;&lt;/a&gt;&lt;p&gt;...&lt;/p&gt;</span></span><br><span class="line"><span class="string">&lt;/div&gt;</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line">print(soup.a.parents)</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">&lt;generator object PageElement.parents at 0x00000210B2B4C480&gt;</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line">print([f.name <span class="keyword">for</span> f <span class="keyword">in</span> soup.a.parents])</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">['div', 'body', 'html', '[document]']</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"></span><br><span class="line">print(soup.html.parent.name,type(soup.html.parent.name))</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">[document] &lt;class 'str'&gt;</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 某标签的上行遍历</span></span><br><span class="line"><span class="keyword">for</span> p <span class="keyword">in</span> soup.tag.parents:</span><br><span class="line">    print(p.name)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>平行遍历：兄弟节点（同一个父标签）间遍历</p>
+<p>| 属性               | 说明                                                 |<br>| —————— | —————————————————- |<br>| .next_sibling      | 返回按照HTML文本顺序的下一个平行节点标签             |<br>| .previous_sibling  | 返回按照HTML文本顺序的上一个平行节点标签             |<br>| .next_siblings     | 迭代类型，返回按照HTML文本顺序的后续所有平行节点标签 |<br>| .previous_siblings | 迭代类型，返回按照HTML文本属性的前序所有平行节点标签 |</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 属性示例</span></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line"></span><br><span class="line">url = <span class="string">'https://www.crummy.com/software/BeautifulSoup/'</span></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    r = requests.get(url)</span><br><span class="line">    r.raise_for_status()</span><br><span class="line"><span class="keyword">except</span>:</span><br><span class="line">    print(<span class="string">'网络资源错误'</span>)</span><br><span class="line"></span><br><span class="line">soup = BeautifulSoup(r.text, <span class="string">'html.parser'</span>)</span><br><span class="line">print(soup.a.next_sibling.next_sibling)</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">&lt;p&gt;"A tremendous boon." -- Python411 Podcast&lt;/p&gt;</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># # 某标签的平行遍历</span></span><br><span class="line"><span class="keyword">for</span> sibling <span class="keyword">in</span> soup.a.next_siblings:</span><br><span class="line">    print(sibling.name)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="查找中所有指定标签"><a href="#查找中所有指定标签" class="headerlink" title="查找中所有指定标签"></a>查找中所有指定标签</h2><p>soup.find_all(name=None, attrs={}, recursive=True, text=None, limit=None, **kwargs)</p>
+<p>li = tag(another_tag)</p>
+<ul>
+<li>name可以是单个标签名（支持正则表达式），也可以是多个标签名组成的列表。为True时搜索所有标签。</li>
+<li>对标签属性值的检索字符串，可标注属性检索。</li>
+<li>**kwargs为可约束对象，如id,class,string等，他们的值可以是正则表达式模式</li>
+<li>recursive 是否对子孙节点进行检索</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 找出页面内所有URL链接</span></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line"></span><br><span class="line">url = <span class="string">'https://www.crummy.com/software/BeautifulSoup/'</span></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    r = requests.get(url)</span><br><span class="line">    r.raise_for_status()</span><br><span class="line"><span class="keyword">except</span>:</span><br><span class="line">    print(<span class="string">'网络资源错误'</span>)</span><br><span class="line"></span><br><span class="line">soup = BeautifulSoup(r.text, <span class="string">'html.parser'</span>)</span><br><span class="line"><span class="keyword">for</span> link <span class="keyword">in</span> soup.find_all(<span class="string">'a'</span>):</span><br><span class="line">    print(link.get(<span class="string">'href'</span>))</span><br><span class="line"></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">bs4/download/</span></span><br><span class="line"><span class="string">#Download</span></span><br><span class="line"><span class="string">bs4/doc/</span></span><br><span class="line"><span class="string">#HallOfFame</span></span><br><span class="line"><span class="string">https://code.launchpad.net/beautifulsoup</span></span><br><span class="line"><span class="string">https://bazaar.launchpad.net/%7Eleonardr/beautifulsoup/bs4/view/head:/CHANGELOG</span></span><br><span class="line"><span class="string">https://groups.google.com/forum/?fromgroups#!forum/beautifulsoup</span></span><br><span class="line"><span class="string">zine/</span></span><br><span class="line"><span class="string">https://tidelift.com/subscription/pkg/pypi-beautifulsoup4?utm_source=pypi-beautifulsoup4&amp;utm_medium=referral&amp;utm_campaign=website</span></span><br><span class="line"><span class="string">zine/</span></span><br><span class="line"><span class="string">https://groups.google.com/forum/?fromgroups#!forum/beautifulsoup</span></span><br><span class="line"><span class="string">https://bugs.launchpad.net/beautifulsoup/</span></span><br><span class="line"><span class="string">http://lxml.de/</span></span><br><span class="line"><span class="string">http://code.google.com/p/html5lib/</span></span><br><span class="line"><span class="string">bs4/doc/</span></span><br><span class="line"><span class="string">None</span></span><br><span class="line"><span class="string">bs4/download/</span></span><br><span class="line"><span class="string">http://www.crummy.com/software/BeautifulSoup/bs3/documentation.html</span></span><br><span class="line"><span class="string">download/3.x/BeautifulSoup-3.2.1.tar.gz</span></span><br><span class="line"><span class="string">None</span></span><br><span class="line"><span class="string">http://www.nytimes.com/2007/10/25/arts/design/25vide.html</span></span><br><span class="line"><span class="string">https://github.com/reddit/reddit/blob/85f9cff3e2ab9bb8f19b96acd8da4ebacc079f04/r2/r2/lib/media.py</span></span><br><span class="line"><span class="string">http://www.harrowell.org.uk/viktormap.html</span></span><br><span class="line"><span class="string">http://svn.python.org/view/tracker/importer/</span></span><br><span class="line"><span class="string">http://www2.ljworld.com/</span></span><br><span class="line"><span class="string">http://www.b-list.org/weblog/2010/nov/02/news-done-broke/</span></span><br><span class="line"><span class="string">http://esrl.noaa.gov/gsd/fab/</span></span><br><span class="line"><span class="string">http://laps.noaa.gov/topograbber/</span></span><br><span class="line"><span class="string">http://groups.google.com/group/beautifulsoup/</span></span><br><span class="line"><span class="string">https://launchpad.net/beautifulsoup</span></span><br><span class="line"><span class="string">https://code.launchpad.net/beautifulsoup/</span></span><br><span class="line"><span class="string">https://bugs.launchpad.net/beautifulsoup/</span></span><br><span class="line"><span class="string">/source/software/BeautifulSoup/index.bhtml</span></span><br><span class="line"><span class="string">/self/</span></span><br><span class="line"><span class="string">/self/contact.html</span></span><br><span class="line"><span class="string">http://creativecommons.org/licenses/by-sa/2.0/</span></span><br><span class="line"><span class="string">http://creativecommons.org/licenses/by-sa/2.0/</span></span><br><span class="line"><span class="string">http://www.crummy.com/</span></span><br><span class="line"><span class="string">http://www.crummy.com/software/</span></span><br><span class="line"><span class="string">http://www.crummy.com/software/BeautifulSoup/</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
+<h2 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h2>   <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 笔趣阁某小说的某章节</span></span><br><span class="line">url = <span class="string">'https://www.biquge.info/10_10582/10237602.html'</span></span><br></pre></td></tr></table></figure>
+<p>   import requests<br>   from bs4 import BeautifulSoup</p>
+<p>   try:<br>       r = requests.get(url)<br>       r.raise_for_status()<br>       r.encoding = r.apparent_encoding<br>   except:<br>       print(‘网络资源错误’)</p>
+<p>   soup = BeautifulSoup(r.text, ‘html.parser’)</p>
+<p>   title = soup.h1.string<br>   content = ‘’.join(soup.find(‘div’, id=’content’).strings)</p>
+<p>   print(title)<br>   print()<br>   print(content)<br>   <code>`</code></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+            <a href="/tags/爬虫/" rel="tag"># 爬虫</a>
+          
+            <a href="/tags/数据解析/" rel="tag"># 数据解析</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/01/04/[python库]PIL/" rel="next" title="pillow">
+                <i class="fa fa-chevron-left"></i> pillow
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/01/06/[python库]jieba/" rel="prev" title="jieba">
+                jieba <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">萧遥</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">89</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">141</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/xiaoyao1949" title="GitHub &rarr; https://github.com/xiaoyao1949" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:xiaoyao1949@outlook.com" title="E-Mail &rarr; mailto:xiaoyao1949@outlook.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Beautiful-Soup库解析器"><span class="nav-number">1.</span> <span class="nav-text">Beautiful Soup库解析器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BeautifulSoup类的基本元素"><span class="nav-number">2.</span> <span class="nav-text">BeautifulSoup类的基本元素</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#遍历DOM树"><span class="nav-number">3.</span> <span class="nav-text">遍历DOM树</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查找中所有指定标签"><span class="nav-number">4.</span> <span class="nav-text">查找中所有指定标签</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实例"><span class="nav-number">5.</span> <span class="nav-text">实例</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">萧遥</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.1"></script>
+
+  <script src="/js/src/motion.js?v=7.0.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/schemes/muse.js?v=7.0.1"></script>
+
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.1"></script>
+<script src="/js/src/post-details.js?v=7.0.1"></script>
+
+
+
+  
+
+
+  <script src="/js/src/next-boot.js?v=7.0.1"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+
+  
+<script>
+if ($('body').find('pre.mermaid').length) {
+  $.ajax({
+    type: 'GET',
+    url: '//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js',
+    dataType: 'script',
+    cache: true,
+    success: function() {
+      mermaid.initialize({
+        theme: 'default',
+        logLevel: 3,
+        flowchart: { curve: 'linear' },
+        gantt: { axisFormat: '%m/%d/%Y' },
+        sequence: { actorMargin: 50 }
+      });
+    }
+  });
+}
+</script>
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+<style>
+  .copy-btn {
+    display: inline-block;
+    padding: 6px 12px;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 20px;
+    color: #333;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    
+      background-color: #fff;
+      border: none;
+    
+    user-select: none;
+    outline: 0;
+  }
+
+  .highlight-wrap .copy-btn {
+    transition: opacity .3s ease-in-out;
+    opacity: 0;
+    padding: 2px 6px;
+    position: absolute;
+    
+      right: 0px;
+      height: 42px;
+    
+  }
+
+  .highlight-wrap:hover .copy-btn,
+  .highlight-wrap .copy-btn:focus {
+    opacity: 1;
+  }
+
+  .highlight-wrap {
+    position: relative;
+  }
+</style>
+<script>
+  $('.highlight').each(function(i, e) {
+    var $wrap = $('<div>').addClass('highlight-wrap');
+    $(e).after($wrap);
+    $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function(e) {
+      var code = $(this).parent().find('.code').find('.line').map(function(i, e) {
+        return $(e).text();
+      }).toArray().join('\n');
+      var ta = document.createElement('textarea');
+      var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+      ta.style.top = yPosition + 'px'; // Prevent page scroll
+      ta.style.position = 'absolute';
+      ta.style.opacity = '0';
+      ta.readOnly = true;
+      ta.value = code;
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0, code.length);
+      ta.readOnly = false;
+      var result = document.execCommand('copy');
+      
+        if (result) $(this).text('复制成功');
+        else $(this).text('复制失败');
+      
+      ta.blur(); // For iOS
+      $(this).blur();
+    })).on('mouseleave', function(e) {
+      var $b = $(this).find('.copy-btn');
+      setTimeout(function() {
+        $b.text('复制');
+      }, 300);
+    }).append(e);
+  })
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,1415 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '7.0.1',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="提供友好的HTTP协议访问方式">
+<meta name="keywords" content="python,第三方库,爬虫,http请求">
+<meta property="og:type" content="article">
+<meta property="og:title" content="requests">
+<meta property="og:url" content="http://yoursite.com/2019/01/25/[python库]requests/index.html">
+<meta property="og:site_name" content="一个代码手艺人的技术博客">
+<meta property="og:description" content="提供友好的HTTP协议访问方式">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-03-11T16:12:02.298Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="requests">
+<meta name="twitter:description" content="提供友好的HTTP协议访问方式">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/01/25/[python库]requests/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>requests | 一个代码手艺人的技术博客</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">一个代码手艺人的技术博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">为学日益</h1>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/25/[python库]requests/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="萧遥">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一个代码手艺人的技术博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">requests
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-01-25 13:46:34" itemprop="dateCreated datePublished" datetime="2019-01-25T13:46:34+08:00">2019-01-25</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-03-12 00:12:02" itemprop="dateModified" datetime="2019-03-12T00:12:02+08:00">2019-03-12</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/python库/" itemprop="url" rel="index"><span itemprop="name">python库</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>提供友好的HTTP协议访问方式<br><a id="more"></a></p>
+<ul>
+<li><p><a href="http://www.python-requests.org/en/master/" target="_blank" rel="noopener">http://www.python-requests.org/en/master/</a></p>
+</li>
+<li><p>第三方库，需要手动安装</p>
+<p>pip install requests</p>
+</li>
+<li><p>简单示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line">response = requests.get(<span class="string">'http://www.python-requests.org/en/master/'</span>)</span><br><span class="line">print(response.status_code)</span><br><span class="line">print(response.text)</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">200</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"</span></span><br><span class="line"><span class="string">  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"&gt;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&lt;html xmlns="http://www.w3.org/1999/xhtml" lang="en"&gt;</span></span><br><span class="line"><span class="string">  &lt;head&gt;..................</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="2个重要对象"><a href="#2个重要对象" class="headerlink" title="2个重要对象"></a>2个重要对象</h2><ul>
+<li><p>Request对象</p>
+</li>
+<li><p>Response对象</p>
+<p>| Response最常用的5个属性 | 说明                                                         |<br>| ———————– | ———————————————————— |<br>| r.status_code           | HTTP请求的返回状态，200为成功                                |<br>| r.text                  | 根据encoding属性来返回HTTP报文体                             |<br>| r.encoding              | 从HTTP header中charset字段猜测的响应内容编码方式 ，如果没有这个地段，则默认ISO-8859-1 |<br>| r.apparent_encoding     | 从内容中分析除的响应内容编码方式（备选编码方式）             |<br>| r.content               | HTTP相应内容的二进制形式                                     |</p>
+<p>| Response常用方法     | 说明                                    |<br>| ——————– | ————————————— |<br>| r.raise_for_status() | 如果不是200，产生异常requests.HTTPEroor |</p>
+</li>
+</ul>
+<h2 id="6种异常"><a href="#6种异常" class="headerlink" title="6种异常"></a>6种异常</h2><p>  网络连接不总是稳定可靠的</p>
+<p>  所以最好用try-except和raise_for_status搭配来处理异常</p>
+<table>
+<thead>
+<tr>
+<th>异常</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>requests.ConnectionError</td>
+<td>网络连接错误异常，如DNS查询失败，拒绝连接等</td>
+</tr>
+<tr>
+<td>requests.HTTPError</td>
+<td>HTTP错误异常</td>
+</tr>
+<tr>
+<td>requests.URLRequired</td>
+<td>URL缺失异常</td>
+</tr>
+<tr>
+<td>requests.TooManyRedirects</td>
+<td>超过最大重定向次数，产生重定向异常</td>
+</tr>
+<tr>
+<td>requests.ConnectTimeout</td>
+<td>连接远程服务器超时异常</td>
+</tr>
+<tr>
+<td>requests.Timeout</td>
+<td>请求URL超时，产生超时异常</td>
+</tr>
+</tbody>
+</table>
+<h2 id="7个主要方法"><a href="#7个主要方法" class="headerlink" title="7个主要方法"></a>7个主要方法</h2><table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>requests.requests()</td>
+<td>构造一个请求，支撑以下各方法的基础方法</td>
+</tr>
+<tr>
+<td>requests.get()</td>
+<td>对于HTTP的GET请求</td>
+</tr>
+<tr>
+<td>requests.head()</td>
+<td>对于HTTP的HEAD请求</td>
+</tr>
+<tr>
+<td>requests.post()</td>
+<td>对于HTTP的POST请求</td>
+</tr>
+<tr>
+<td>requests.put()</td>
+<td>对于HTTP的PUT请求</td>
+</tr>
+<tr>
+<td>requests.patch()</td>
+<td>对于HTTP的PATCH请求</td>
+</tr>
+<tr>
+<td>requests.delete()</td>
+<td>对于HTTP的DELETE请求</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><p>request方法</p>
+<p>最基础也是最核心的方法，其他的方法都是由它封装而来。</p>
+<p>requests.request(method, url, **kwargs)</p>
+<p>method：请求方法，对应get,head,post,put等7种方法</p>
+<p>url：要访问的网络资源</p>
+<p>**kwargs：13个控制访问参数</p>
+<p>| 控制访问参数    | 描述                                           |<br>| ————— | ———————————————- |<br>| params          | 字典或字节序列，作为参数增加到url中            |<br>| data            | 字典、字节序列或文件对象，作为Request的内容    |<br>| json            | JSON格式的数据，作为Request的内容              |<br>| headers         | 字典，HTTP定制头                               |<br>| cookies         | 字典或CookieJar，Request中的cookie             |<br>| auth            | 元组，支持HTTP认证功能                         |<br>| files           | 字典类型，传输文件                             |<br>| timeout         | 设定超时时间，秒为单位                         |<br>| proxies         | 字典类型，设定访问代理服务器，可以增加登录认证 |<br>| allow_redirects | True/False，默认True，重定向开关               |<br>| stream          | True/False，默认True，获取内容立即下载开关     |<br>| verify          | True/False，默认True，认证SSL证书开关          |<br>| cert            | 本地SSL证书路径                                |</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kv = &#123;<span class="string">'key1'</span>:<span class="string">'value1'</span>,<span class="string">'key2'</span>:<span class="string">'value2'</span>&#125;</span><br><span class="line">st = <span class="string">'发送内容'</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># params</span></span><br><span class="line">r = requests.request(<span class="string">'GET'</span>,<span class="string">'http://python123.io/ws'</span>, params = kv)</span><br><span class="line">print(r.url)</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">https://python123.io/ws?key1=value1&amp;key2=value2</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># data</span></span><br><span class="line">r = requests.request(<span class="string">'POST'</span>,<span class="string">'http://python123.io/ws'</span>, data = kv)</span><br><span class="line">r = requests.request(<span class="string">'POST'</span>,<span class="string">'http://python123.io/ws'</span>, data = st)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># json</span></span><br><span class="line">r = requests.request(<span class="string">'POST'</span>,<span class="string">'http://python123.io/ws'</span>, json = kv)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># headers</span></span><br><span class="line">hd = &#123;<span class="string">'user-agent'</span>:<span class="string">'Chrome/10'</span>&#125;</span><br><span class="line">r = requests.request(<span class="string">'POST'</span>, <span class="string">'http://python123.io/ws'</span>, headers = hd)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># files</span></span><br><span class="line">fs = &#123;</span><br><span class="line">    <span class="string">'file'</span>:open(<span class="string">'data.xls'</span>, <span class="string">'rb'</span>)</span><br><span class="line">&#125;</span><br><span class="line">r = requests.request(</span><br><span class="line">    <span class="string">'POST'</span>,</span><br><span class="line">    <span class="string">'http://python123.io/ws'</span>,</span><br><span class="line">    files=fs</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># timeout</span></span><br><span class="line">r = requests.request(</span><br><span class="line">    <span class="string">'GET'</span>,</span><br><span class="line">    <span class="string">'http://www.baidu.com'</span>,</span><br><span class="line">    timeout = <span class="number">10</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># proxies</span></span><br><span class="line">pxs = &#123;</span><br><span class="line">    <span class="string">'http'</span>:<span class="string">'http://user:pass@10.10.10.1:1234'</span>, 		<span class="string">'https'</span>:<span class="string">'https://10.10.10.1:4321'</span></span><br><span class="line">&#125;</span><br><span class="line">r = requests.request(</span><br><span class="line">    <span class="string">'GET'</span>,</span><br><span class="line">    <span class="string">'http://www.baidu.com'</span>,</span><br><span class="line">    proxies=pxs</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>get方法</p>
+<p>最常用</p>
+<p>r = requests.get(url, params=None, **kwargs)</p>
+<p>url是需要获取的页面链接</p>
+<p>params是url重点额外参数，字典或字节流格式</p>
+<p>**kwargs是12个控制访问的参数，同上</p>
+<p>requests.get是由requests.request方法封装的</p>
+<p>r是Response对象，包含服务器返回的所有信息。</p>
+</li>
+<li><p>head方法</p>
+<p>requests.head(url, **kwargs)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">r = requests.head(<span class="string">'http://www.python-requests.org/en/master/'</span>)</span><br><span class="line">print(r.headers)</span><br><span class="line">print(r.text)</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">&#123;'Content-Length': '0', 'Content-Type': 'text/html', 'Content-Encoding': 'gzip', 'Last-Modified': 'Thu, 13 Dec 2018 21:34:51 GMT', 'ETag': 'W/"5c12d07b-c7e2"', 'Vary': 'Accept-Encoding', 'Server': 'nginx', 'X-Cname-TryFiles': 'True', 'X-Served': 'Nginx', 'X-Deity': 'web01', 'Date': 'Fri, 22 Feb 2019 10:23:20 GMT'&#125;</span></span><br><span class="line"><span class="string">''</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>post方法</p>
+<p>requests.post(url, data=None, json =None, **kwargs)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 向URL post一个字典，自动编码为form表单</span></span><br><span class="line">payload = &#123;<span class="string">'key1'</span>:<span class="string">'value1'</span>, <span class="string">'key2'</span>:<span class="string">'value2'</span>&#125;</span><br><span class="line">r = requests.post(<span class="string">'http://httpbin.org/post/'</span>, data = payload)</span><br><span class="line">print(r.text)</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">&#123;</span></span><br><span class="line"><span class="string">  "args": &#123;&#125;,</span></span><br><span class="line"><span class="string">  "data": "",</span></span><br><span class="line"><span class="string">  "files": &#123;&#125;,</span></span><br><span class="line"><span class="string">  "form": &#123;</span></span><br><span class="line"><span class="string">    "key1": "value1",</span></span><br><span class="line"><span class="string">    "key2": "value2"</span></span><br><span class="line"><span class="string">  &#125;,</span></span><br><span class="line"><span class="string">  "headers": &#123;</span></span><br><span class="line"><span class="string">    "Accept": "*/*",</span></span><br><span class="line"><span class="string">    "Accept-Encoding": "gzip, deflate",</span></span><br><span class="line"><span class="string">    "Content-Length": "23",</span></span><br><span class="line"><span class="string">    "Content-Type": "application/x-www-form-urlencoded",</span></span><br><span class="line"><span class="string">    "Host": "httpbin.org",</span></span><br><span class="line"><span class="string">    "User-Agent": "python-requests/2.21.0"</span></span><br><span class="line"><span class="string">  &#125;,</span></span><br><span class="line"><span class="string">  "json": null,</span></span><br><span class="line"><span class="string">  "origin": "171.125.82.158, 171.125.82.158",</span></span><br><span class="line"><span class="string">  "url": "https://httpbin.org/post"</span></span><br><span class="line"><span class="string">&#125;</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 向URL POST一个字符串 自动编码为data</span></span><br><span class="line">r = requests.post(<span class="string">'http://httpbin.org/post'</span>, data = <span class="string">'ABC'</span>)</span><br><span class="line">print(r.text)</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">'&#123;\n  "args": &#123;&#125;, \n  "data": "ABC", \n  "files": &#123;&#125;, \n  "form": &#123;&#125;, \n  "headers": &#123;\n    "Accept": "*/*", \n    "Accept-Encoding": "gzip, deflate", \n    "Content-Length": "3", \n    "Host": "httpbin.org", \n    "User-Agent": "python-requests/2.21.0"\n  &#125;, \n  "json": null, \n  "origin": "171.125.82.158, 171.125.82.158", \n  "url": "https://httpbin.org/post"\n&#125;\n'</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># post 提交表单</span></span><br><span class="line">data = &#123;<span class="string">'first name'</span>:<span class="string">'xxxx'</span>,<span class="string">'last naem'</span>:<span class="string">'hhh'</span>&#125;</span><br><span class="line"></span><br><span class="line">r = requests.post(url,data)</span><br><span class="line">print(r.text)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># post 提交照片</span></span><br><span class="line">file = &#123;<span class="string">'uploadFile'</span>:open(<span class="string">'./image.jpg'</span>,<span class="string">'rb'</span>)&#125;</span><br><span class="line">r = requests.post(url,files=file)</span><br><span class="line">print(r.text)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用cookies</span></span><br><span class="line">payload = &#123;<span class="string">'first name'</span>:<span class="string">'xxxx'</span>,<span class="string">'last naem'</span>:<span class="string">'hhh'</span>&#125;</span><br><span class="line">r = requests.post(</span><br><span class="line">    <span class="string">'http://pythonscraping.com/pages/cookies/welcome.php'</span>,</span><br><span class="line">	data=payload</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">print(r.cookies.get_dict())</span><br><span class="line">r = request.get(</span><br><span class="line">    <span class="string">'http://pythonscraping.com/pages/cookies/profile.php'</span>,</span><br><span class="line">    cookies=r.cookies)</span><br><span class="line">print(r.text)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用session</span></span><br><span class="line">session = requests.Session()</span><br><span class="line">payload = &#123;<span class="string">'first name'</span>:<span class="string">'xxxx'</span>,<span class="string">'last naem'</span>:<span class="string">'hhh'</span>&#125;</span><br><span class="line">r = session.post(</span><br><span class="line">    <span class="string">'http://pythonscraping.com/pages/cookies/welcome.php'</span>,</span><br><span class="line">    data=payload</span><br><span class="line">)</span><br><span class="line">print(r.cookies.get_dict())</span><br><span class="line">r = session.get(</span><br><span class="line">    <span class="string">'http://pythonscraping.com/pages/cookies/profile.php'</span></span><br><span class="line">)</span><br><span class="line">print(r.text)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>put方法</p>
+<p>requests.put(url, data=None, **kwargs)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">payload = &#123;<span class="string">'key1'</span>:<span class="string">'value1'</span>, <span class="string">'key2'</span>:<span class="string">'value2'</span>&#125;</span><br><span class="line">r = requests.put(<span class="string">'http://httpbin.org/put'</span>, data = payload)</span><br><span class="line">print(r.text)</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">&#123;</span></span><br><span class="line"><span class="string">  "args": &#123;&#125;,</span></span><br><span class="line"><span class="string">  "data": "",</span></span><br><span class="line"><span class="string">  "files": &#123;&#125;,</span></span><br><span class="line"><span class="string">  "form": &#123;</span></span><br><span class="line"><span class="string">    "key1": "value1",</span></span><br><span class="line"><span class="string">    "key2": "value2"</span></span><br><span class="line"><span class="string">  &#125;,</span></span><br><span class="line"><span class="string">  "headers": &#123;</span></span><br><span class="line"><span class="string">    "Accept": "*/*",</span></span><br><span class="line"><span class="string">    "Accept-Encoding": "gzip, deflate",</span></span><br><span class="line"><span class="string">    "Content-Length": "23",</span></span><br><span class="line"><span class="string">    "Content-Type": "application/x-www-form-urlencoded",</span></span><br><span class="line"><span class="string">    "Host": "httpbin.org",</span></span><br><span class="line"><span class="string">    "User-Agent": "python-requests/2.21.0"</span></span><br><span class="line"><span class="string">  &#125;,</span></span><br><span class="line"><span class="string">  "json": null,</span></span><br><span class="line"><span class="string">  "origin": "171.125.82.158, 171.125.82.158",</span></span><br><span class="line"><span class="string">  "url": "https://httpbin.org/put"</span></span><br><span class="line"><span class="string">&#125;</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>patch</p>
+<p>requests.patch(url, data=None, **kwargs)</p>
+</li>
+<li><p>delete</p>
+<p>requests.delete(url, **kwargs)</p>
+</li>
+</ul>
+<h2 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h2><h3 id="京东商品页面爬取"><a href="#京东商品页面爬取" class="headerlink" title="京东商品页面爬取"></a>京东商品页面爬取</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line">url = <span class="string">'https://item.jd.com/100002338246.html'</span></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">	r = requests.get(url)</span><br><span class="line">	r.raise_for_status()</span><br><span class="line">    r.encoding = r.apparent_encoding</span><br><span class="line">    print(r.text)</span><br><span class="line"><span class="keyword">except</span>:</span><br><span class="line">    print(<span class="string">'获取页面内容失败'</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="亚马逊商品页面爬取"><a href="#亚马逊商品页面爬取" class="headerlink" title="亚马逊商品页面爬取"></a>亚马逊商品页面爬取</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 增加UA</span></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line">url = <span class="string">'https://www.amazon.cn/dp/B06VTBN9ML/'</span></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    headers = &#123;<span class="string">'User-Agent'</span>:<span class="string">'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.109 Safari/537.36'</span>&#125;</span><br><span class="line">	r = requests.get(url, headers=headers)</span><br><span class="line">	r.raise_for_status()</span><br><span class="line">    r.encoding = r.apparent_encoding</span><br><span class="line">    print(r.request.headers)</span><br><span class="line">    print(len(r.text))</span><br><span class="line"><span class="keyword">except</span>:</span><br><span class="line">    print(<span class="string">'获取页面内容失败'</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="百度、360搜索关键字提交"><a href="#百度、360搜索关键字提交" class="headerlink" title="百度、360搜索关键字提交"></a>百度、360搜索关键字提交</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">百度的关键词接口</span></span><br><span class="line"><span class="string">http://www.baidu.com/s?wd=keyword</span></span><br><span class="line"><span class="string">360的关键词接口</span></span><br><span class="line"><span class="string">http://www.so.com/s?q=keyword</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">url_baidu = <span class="string">'http://www.baidu.com/s'</span></span><br><span class="line">url_360 = <span class="string">'http://www.so.com/s'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">	r = requests.get(url_baidu, params=&#123;<span class="string">'wd'</span>:<span class="string">'python'</span>&#125;)</span><br><span class="line">    <span class="comment"># r = requests.get(url_360, params=&#123;'q':'python'&#125;)</span></span><br><span class="line">	r.raise_for_status()</span><br><span class="line">    print(r.request.url)</span><br><span class="line">    r.encoding = r.apparent_encoding</span><br><span class="line">    print(len(r.text))</span><br><span class="line"><span class="keyword">except</span>:</span><br><span class="line">    print(<span class="string">'获取页面内容失败'</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="网络图片的爬取和存储"><a href="#网络图片的爬取和存储" class="headerlink" title="网络图片的爬取和存储"></a>网络图片的爬取和存储</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> os.path</span><br><span class="line">pic_url = <span class="string">'https://img.88tph.com/5e/e4/XuQeXjTUEemOjAAWPghzvA-0.jpg'</span></span><br><span class="line">filename = pic_url.split(<span class="string">'/'</span>)[<span class="number">-1</span>]</span><br><span class="line">path = os.path.join(<span class="string">'d:/'</span>, filename)</span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    r = requests.get(pic_url)</span><br><span class="line">    r.raise_for_status()</span><br><span class="line">    <span class="keyword">with</span> open(path, <span class="string">'wb'</span>) <span class="keyword">as</span> f:</span><br><span class="line">        f.write(r.content)</span><br><span class="line">    print(<span class="string">'文件%s下载完成'</span>%path)</span><br><span class="line"><span class="keyword">except</span>:</span><br><span class="line">    print(<span class="string">'图片下载失败，请确保图片路径有效'</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="IP地址归属地查询"><a href="#IP地址归属地查询" class="headerlink" title="IP地址归属地查询"></a>IP地址归属地查询</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">ip138网站的API</span></span><br><span class="line"><span class="string">http://www.ip138.com/ips138.asp?ip=xxx.xxx.xxx.xxx</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line">url = <span class="string">'http://www.ip138.com/ips138.asp'</span></span><br><span class="line">ip = &#123;<span class="string">'ip'</span>:<span class="string">'192.168.1.1'</span>&#125;</span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">	r = requests.get(url, params=ip)</span><br><span class="line">	r.raise_for_status()</span><br><span class="line">    r.encoding = r.apparent_encoding</span><br><span class="line">    print(r.text)</span><br><span class="line"><span class="keyword">except</span>:</span><br><span class="line">    print(<span class="string">'获取页面内容失败'</span>)</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+            <a href="/tags/第三方库/" rel="tag"># 第三方库</a>
+          
+            <a href="/tags/爬虫/" rel="tag"># 爬虫</a>
+          
+            <a href="/tags/http请求/" rel="tag"># http请求</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/01/21/[python库]urllib/" rel="next" title="urllib">
+                <i class="fa fa-chevron-left"></i> urllib
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/01/25/[python库]wordcloud/" rel="prev" title="wordcloud">
+                wordcloud <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">萧遥</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">89</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">141</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/xiaoyao1949" title="GitHub &rarr; https://github.com/xiaoyao1949" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:xiaoyao1949@outlook.com" title="E-Mail &rarr; mailto:xiaoyao1949@outlook.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#2个重要对象"><span class="nav-number">1.</span> <span class="nav-text">2个重要对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6种异常"><span class="nav-number">2.</span> <span class="nav-text">6种异常</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7个主要方法"><span class="nav-number">3.</span> <span class="nav-text">7个主要方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实例"><span class="nav-number">4.</span> <span class="nav-text">实例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#京东商品页面爬取"><span class="nav-number">4.1.</span> <span class="nav-text">京东商品页面爬取</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#亚马逊商品页面爬取"><span class="nav-number">4.2.</span> <span class="nav-text">亚马逊商品页面爬取</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#百度、360搜索关键字提交"><span class="nav-number">4.3.</span> <span class="nav-text">百度、360搜索关键字提交</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#网络图片的爬取和存储"><span class="nav-number">4.4.</span> <span class="nav-text">网络图片的爬取和存储</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IP地址归属地查询"><span class="nav-number">4.5.</span> <span class="nav-text">IP地址归属地查询</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">萧遥</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.1"></script>
+
+  <script src="/js/src/motion.js?v=7.0.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/schemes/muse.js?v=7.0.1"></script>
+
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.1"></script>
+<script src="/js/src/post-details.js?v=7.0.1"></script>
+
+
+
+  
+
+
+  <script src="/js/src/next-boot.js?v=7.0.1"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+
+  
+<script>
+if ($('body').find('pre.mermaid').length) {
+  $.ajax({
+    type: 'GET',
+    url: '//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js',
+    dataType: 'script',
+    cache: true,
+    success: function() {
+      mermaid.initialize({
+        theme: 'default',
+        logLevel: 3,
+        flowchart: { curve: 'linear' },
+        gantt: { axisFormat: '%m/%d/%Y' },
+        sequence: { actorMargin: 50 }
+      });
+    }
+  });
+}
+</script>
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+<style>
+  .copy-btn {
+    display: inline-block;
+    padding: 6px 12px;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 20px;
+    color: #333;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    
+      background-color: #fff;
+      border: none;
+    
+    user-select: none;
+    outline: 0;
+  }
+
+  .highlight-wrap .copy-btn {
+    transition: opacity .3s ease-in-out;
+    opacity: 0;
+    padding: 2px 6px;
+    position: absolute;
+    
+      right: 0px;
+      height: 42px;
+    
+  }
+
+  .highlight-wrap:hover .copy-btn,
+  .highlight-wrap .copy-btn:focus {
+    opacity: 1;
+  }
+
+  .highlight-wrap {
+    position: relative;
+  }
+</style>
+<script>
+  $('.highlight').each(function(i, e) {
+    var $wrap = $('<div>').addClass('highlight-wrap');
+    $(e).after($wrap);
+    $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function(e) {
+      var code = $(this).parent().find('.code').find('.line').map(function(i, e) {
+        return $(e).text();
+      }).toArray().join('\n');
+      var ta = document.createElement('textarea');
+      var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+      ta.style.top = yPosition + 'px'; // Prevent page scroll
+      ta.style.position = 'absolute';
+      ta.style.opacity = '0';
+      ta.readOnly = true;
+      ta.value = code;
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0, code.length);
+      ta.readOnly = false;
+      var result = document.execCommand('copy');
+      
+        if (result) $(this).text('复制成功');
+        else $(this).text('复制失败');
+      
+      ta.blur(); // For iOS
+      $(this).blur();
+    })).on('mouseleave', function(e) {
+      var $b = $(this).find('.copy-btn');
+      setTimeout(function() {
+        $b.text('复制');
+      }, 300);
+    }).append(e);
+  })
+</script>
+
+
+</body>
+</html>
