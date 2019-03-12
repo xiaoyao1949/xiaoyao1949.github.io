@@ -106,7 +106,7 @@
 <meta property="og:site_name" content="一个代码手艺人的技术博客">
 <meta property="og:description" content="git是开发中常用的工具，如何安装并配置git？">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-03-11T13:38:57.931Z">
+<meta property="og:updated_time" content="2019-03-12T11:35:30.649Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux下git的安装与配置">
 <meta name="twitter:description" content="git是开发中常用的工具，如何安装并配置git？">
@@ -406,7 +406,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-03-11 21:38:57" itemprop="dateModified" datetime="2019-03-11T21:38:57+08:00">2019-03-11</time>
+                <time title="修改时间：2019-03-12 19:35:30" itemprop="dateModified" datetime="2019-03-12T19:35:30+08:00">2019-03-12</time>
               
             
           </span>
@@ -459,9 +459,18 @@
 
       
         <p>git是开发中常用的工具，如何安装并配置git？<br><a id="more"></a></p>
-<h2 id="下载地址"><a href="#下载地址" class="headerlink" title="下载地址"></a>下载地址</h2><p><a href="https://git-scm.com/download/" target="_blank" rel="noopener">https://git-scm.com/download/</a></p>
-<h2 id="安装完的测试"><a href="#安装完的测试" class="headerlink" title="安装完的测试"></a>安装完的测试</h2><p>启动gitbash</p>
-<p>git –version 查看git版本</p>
+<h2 id="Windows下安装"><a href="#Windows下安装" class="headerlink" title="Windows下安装"></a>Windows下安装</h2><p>从 <a href="https://git-scm.com/download/win" target="_blank" rel="noopener">https://git-scm.com/download/win</a> 下载适用的git安装包<br>一路点击next完成安装</p>
+<h2 id="Linux下安装"><a href="#Linux下安装" class="headerlink" title="Linux下安装"></a>Linux下安装</h2><ul>
+<li>使用包管理工具</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> Debian/Ubuntu</span><br><span class="line"><span class="meta">#</span> For the latest stable version for your release of Debian/Ubuntu</span><br><span class="line">apt-get install git</span><br><span class="line"><span class="meta">#</span> For Ubuntu, this PPA provides the latest stable upstream Git version</span><br><span class="line">add-apt-repository ppa:git-core/ppa # apt update; apt install git</span><br><span class="line"><span class="meta">#</span> Fedora</span><br><span class="line">yum install git (up to Fedora 21)</span><br><span class="line">dnf install git (Fedora 22 and later)</span><br><span class="line"><span class="meta">#</span> Gentoo</span><br><span class="line">emerge --ask --verbose dev-vcs/git</span><br><span class="line"><span class="meta">#</span> Arch Linux</span><br><span class="line">pacman -S git</span><br><span class="line"><span class="meta">#</span> openSUSE</span><br><span class="line">zypper install git</span><br><span class="line"><span class="meta">#</span> Mageia</span><br><span class="line">urpmi git</span><br><span class="line"><span class="meta">#</span> Nix/NixOS</span><br><span class="line">nix-env -i git</span><br><span class="line"><span class="meta">#</span> FreeBSD</span><br><span class="line">pkg install git</span><br><span class="line"><span class="meta">#</span> Solaris 9/10/11 (OpenCSW)</span><br><span class="line">pkgutil -i git</span><br><span class="line"><span class="meta">#</span> Solaris 11 Express</span><br><span class="line">pkg install developer/versioning/git</span><br><span class="line"><span class="meta">#</span> OpenBSD</span><br><span class="line">pkg_add git</span><br><span class="line"><span class="meta">#</span> Alpine</span><br><span class="line">apk add git</span><br></pre></td></tr></table></figure>
+<ul>
+<li>编译源码</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 1. 先更新系统</span><br><span class="line">yum update -y</span><br><span class="line"><span class="meta">#</span> 2. 安装依赖的包</span><br><span class="line">yum install curl-devel expat-devel gettext-devel openssl-devel zlib-devel gcc perl-ExtUtils-MakeMaker</span><br><span class="line"><span class="meta">#</span> 3.下载源码并解压缩</span><br><span class="line"><span class="meta">#</span> https://mirrors.edge.kernel.org/pub/software/scm/git/</span><br><span class="line">wget https://mirrors.edge.kernel.org/pub/software/scm/git/git-2.9.5.tar.xz</span><br><span class="line">unzip v2.9.5.zip</span><br><span class="line">cd git-2.9.5</span><br><span class="line"><span class="meta">#</span> 4. 编译安装</span><br><span class="line">make prefix=/usr/local/git all</span><br><span class="line">sudo make prefix=/usr/local/git install</span><br><span class="line"><span class="meta">#</span> 5. 创建软链</span><br><span class="line">ls -s /usr/local/git/bin/git /usr/bin/git</span><br></pre></td></tr></table></figure>
+<h2 id="安装完的测试"><a href="#安装完的测试" class="headerlink" title="安装完的测试"></a>安装完的测试</h2><p>linux中启动shell,windows中启动CMD<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git --version 查看git版本</span><br></pre></td></tr></table></figure></p>
+<h2 id="配置git"><a href="#配置git" class="headerlink" title="配置git"></a>配置git</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name "Your Name"</span><br><span class="line">git config --global user.email "youremail@domain.com"</span><br></pre></td></tr></table></figure>
+<h2 id="为GitHub账号添加SSH-Keys"><a href="#为GitHub账号添加SSH-Keys" class="headerlink" title="为GitHub账号添加SSH Keys"></a>为GitHub账号添加SSH Keys</h2><p>以公钥认证方式访问SSH协议的Git服务器时无需输入口令，而且更安全。（访问HTTP协议的Git服务器时，比如提交修改，每次都需要输入口令。）<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 创建ssh Key</span><br><span class="line">ssh-keygen -t rsa -C "youremail@xxx.com"</span><br><span class="line"><span class="meta">#</span> 复制SSH Key</span><br><span class="line">cat ~/.ssh/id_rsa.pub</span><br><span class="line"><span class="meta">#</span> 登录github-&gt; Accounting settings图标-&gt; SSH key-&gt; Add SSH key-&gt; 填写SSH key的名称（可以起一个自己容易区分的），然后将拷贝的~/.ssh/id_rsa.pub文件内容粘帖-&gt; add key”按钮添加</span><br><span class="line"><span class="meta">#</span> 测试</span><br><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -583,7 +592,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">89</span>
+                    <span class="site-state-item-count">88</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -622,7 +631,7 @@
                     
                       
                     
-                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-count">10</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -921,7 +930,7 @@
                     
                       
                     
-                    <span class="site-state-item-count">141</span>
+                    <span class="site-state-item-count">140</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -983,7 +992,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#下载地址"><span class="nav-number">1.</span> <span class="nav-text">下载地址</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装完的测试"><span class="nav-number">2.</span> <span class="nav-text">安装完的测试</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Windows下安装"><span class="nav-number">1.</span> <span class="nav-text">Windows下安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux下安装"><span class="nav-number">2.</span> <span class="nav-text">Linux下安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装完的测试"><span class="nav-number">3.</span> <span class="nav-text">安装完的测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置git"><span class="nav-number">4.</span> <span class="nav-text">配置git</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为GitHub账号添加SSH-Keys"><span class="nav-number">5.</span> <span class="nav-text">为GitHub账号添加SSH Keys</span></a></li></ol></div>
             
 
           </div>
